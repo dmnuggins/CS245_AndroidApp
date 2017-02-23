@@ -2,7 +2,7 @@ package cs245.concentration;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+//This is test.
 public class GameActivity extends AppCompatActivity {
 
     @Override
