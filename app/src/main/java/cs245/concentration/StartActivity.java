@@ -44,7 +44,9 @@ public class StartActivity extends AppCompatActivity{
                         userInput.setError("CANNOT BE AN ODD NUMBER");
                     } else {
                         Intent i = new Intent(StartActivity.this, GameActivity.class);
+                        i.putExtra("input", input);
                         startActivity(i);
+
                     }
                 }
         });
