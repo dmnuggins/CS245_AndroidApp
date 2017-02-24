@@ -35,11 +35,11 @@ public class StartActivity extends AppCompatActivity{
                     int input = Integer.parseInt(tempInput);
                     if (input > 20) {
                         userInput.requestFocus();
-                        userInput.setError("CANNOT BE GREATER 20");
+                        userInput.setError("CANNOT BE GREATER THAN 20");
                     } else if (input < 2) {
                         userInput.requestFocus();
-                        userInput.setError("CANNOT BE LESS THEN 2");
-                    } else if (input % 2 != 0) {
+                        userInput.setError("CANNOT BE LESS THAN 4");
+                    } else if (input % 4 != 0) {
                         userInput.requestFocus();
                         userInput.setError("CANNOT BE AN ODD NUMBER");
                     } else {
