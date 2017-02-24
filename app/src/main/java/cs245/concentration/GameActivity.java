@@ -13,9 +13,9 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        mText = (TextView)findViewById(R.id.textView);
-        Intent i = getIntent();
-        int input = i.getIntExtra("input", 0);
-        mText.setText("User input: " + input);
+//        mText = (TextView)findViewById(R.id.textView);
+//        Intent i = getIntent();
+//        int input = i.getIntExtra("input", 0);
+//        mText.setText("User input: " + input);
     }
 }

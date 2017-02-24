@@ -4,14 +4,65 @@
     android:id="@+id/activity_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/poker_table"
+    android:orientation="vertical"
+
     tools:context="cs245.concentration.GameActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <GridLayout
+        android:id="@+id/cardsGridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonPanel"
+        android:columnCount="4"
+        android:rowCount="5"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+    </GridLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonPanel"
+        style="@android:style/ButtonBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+
+        android:layout_alignParentStart="true"
+        android:background="@color/buttonBarColor"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/newGameButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/new_game"
+            android:textColor="@color/buttonTextColor" />
+
+        <Button
+            android:id="@+id/tryAgainButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:text="@string/try_again"
+            android:textColor="@color/buttonTextColor" />
+
+        <Button
+            android:id="@+id/endGameButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/end_game"
+            android:textColor="@color/buttonTextColor" />
+    </RelativeLayout>
 </RelativeLayout>
