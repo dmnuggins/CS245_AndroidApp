@@ -3,4 +3,5 @@
     <string name="try_again">Try Again</string>
     <string name="new_game">New Game</string>
     <string name="end_game">End Game</string>
+    <string name="card_description">Concentration Card</string>
 </resources>
