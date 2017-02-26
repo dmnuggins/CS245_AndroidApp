@@ -16,8 +16,9 @@
         android:layout_above="@+id/buttonPanel"
         android:gravity="center"
         android:numColumns="4"
-        android:columnWidth="200dp"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:verticalSpacing="0dp"
+        android:stretchMode="columnWidth">
     </GridView>
 
     <RelativeLayout
