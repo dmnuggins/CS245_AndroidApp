@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class CardAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        int columnWid = 200;
+        int rowHigh = 300;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View gridView;
@@ -30,6 +33,7 @@ public class CardAdapter extends BaseAdapter {
         if (view == null) {
             gridView = new View(context);
             gridView = inflater.inflate(R.layout.card, null);
+            gridView.setLayoutParams(new GridView.LayoutParams(columnWid, rowHigh));
 
             ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
 
