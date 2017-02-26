@@ -43,8 +43,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="@string/new_game"
-            android:textColor="@color/buttonTextColor"
-            android:onClick="newGame"/>
+            android:textColor="@color/buttonTextColor" />
 
         <Button
             android:id="@+id/tryAgainButton"
@@ -54,8 +53,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:text="@string/try_again"
-            android:textColor="@color/buttonTextColor"
-            android:onClick="tryAgain"/>
+            android:textColor="@color/buttonTextColor" />
 
         <Button
             android:id="@+id/endGameButton"
@@ -65,7 +63,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="@string/end_game"
-            android:textColor="@color/buttonTextColor"
-            android:onClick="endGame"/>
+            android:textColor="@color/buttonTextColor" />
     </RelativeLayout>
 </RelativeLayout>

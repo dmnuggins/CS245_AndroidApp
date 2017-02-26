@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,7 +42,20 @@ public class GameActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), (view.findViewById(R.id.image)).getContentDescription(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    public void newGame (View view){
+        Intent intent = new Intent (this, StartActivity.class);
+        // reset everything etc
+        startActivity(intent);
+    }
+
+    public void tryAgain (View vew){
+        // will do later
+    }
+
+    public void endGame (View view){
+        // will do later
     }
 
     protected ArrayList<String> cardList(int input) {
@@ -54,4 +68,6 @@ public class GameActivity extends AppCompatActivity {
         }
         return list;
     }
+
+
 }

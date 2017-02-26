@@ -24,9 +24,6 @@ public class CardAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        int columnWid = 200;
-        int rowHigh = 300;
-
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -35,14 +32,11 @@ public class CardAdapter extends BaseAdapter {
         if (view == null) {
             gridView = new View(context);
             gridView = inflater.inflate(R.layout.card, viewGroup, false);
-            //gridView.setLayoutParams(new GridView.LayoutParams(columnWid, rowHigh));
-            //ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
             ImageView imageView = (ImageView) gridView.findViewById(R.id.image);
             imageView.setAdjustViewBounds(true);
             Collections.shuffle(cardValues);
             String card = cardValues.get(i);
             imageView.setImageResource(R.drawable.playing_card);
-
         } else {
             gridView = (View) view;
         }
