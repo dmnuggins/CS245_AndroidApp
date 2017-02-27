@@ -15,12 +15,11 @@
         android:layout_height="fill_parent"
         android:layout_above="@+id/buttonPanel"
         android:gravity="center"
-        android:numColumns="4"
-        android:padding="40dp"
-        android:verticalSpacing="2dp"
         android:horizontalSpacing="2dp"
-        android:stretchMode="columnWidth">
-    </cs245.concentration.Game.StaticGridView>
+        android:numColumns="4"
+        android:padding="@dimen/grid_view_padding"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp" />
 
     <RelativeLayout
         android:id="@+id/buttonPanel"
@@ -42,9 +41,9 @@
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:onClick="newGame"
             android:text="@string/new_game"
-            android:textColor="@color/buttonTextColor"
-            android:onClick="newGame"/>
+            android:textColor="@color/buttonTextColor" />
 
         <Button
             android:id="@+id/tryAgainButton"
@@ -53,9 +52,9 @@
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
+            android:onClick="tryAgain"
             android:text="@string/try_again"
-            android:textColor="@color/buttonTextColor"
-            android:onClick="tryAgain"/>
+            android:textColor="@color/buttonTextColor" />
 
         <Button
             android:id="@+id/endGameButton"
@@ -64,8 +63,8 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:onClick="endGame"
             android:text="@string/end_game"
-            android:textColor="@color/buttonTextColor"
-            android:onClick="endGame"/>
+            android:textColor="@color/buttonTextColor" />
     </RelativeLayout>
 </RelativeLayout>

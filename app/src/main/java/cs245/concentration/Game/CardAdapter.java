@@ -23,20 +23,63 @@ public class CardAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int i, View view, final ViewGroup viewGroup) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View gridView;
 
         if (view == null) {
-            gridView = new View(context);
+            //gridView = new View(context);
             gridView = inflater.inflate(R.layout.card, viewGroup, false);
-            ImageView imageView = (ImageView) gridView.findViewById(R.id.image);
+            final ImageView imageView = (ImageView) gridView.findViewById(R.id.image);
             imageView.setAdjustViewBounds(true);
-            Collections.shuffle(cardValues);
-            String card = cardValues.get(i);
+            //Collections.shuffle(cardValues);
+            final String card = cardValues.get(i);
             imageView.setImageResource(R.drawable.playing_card);
+
+            imageView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    switch (card){
+                        case "DOLPHIN":
+                            imageView.setImageResource(R.drawable.dolphin_card);
+                            break;
+                        case "WHALE":
+                            imageView.setImageResource(R.drawable.whale_card);
+                            break;
+                        case "SHARK":
+                            imageView.setImageResource(R.drawable.shark_card);
+                            break;
+                        case "OCTOPUS":
+                            imageView.setImageResource(R.drawable.octopus_card);
+                            break;
+                        case "RAY":
+                            imageView.setImageResource(R.drawable.ray_card);
+                            break;
+                        case "TURTLE":
+                            imageView.setImageResource(R.drawable.turtle_card);
+                            break;
+                        case "SEAL":
+                            imageView.setImageResource(R.drawable.seal_card);
+                            break;
+                        case "STARFISH":
+                            imageView.setImageResource(R.drawable.starfish_card);
+                            break;
+                        case "JELLYFISH":
+                            imageView.setImageResource(R.drawable.jellyfish_card);
+                            break;
+                        case "CRAB":
+                            imageView.setImageResource(R.drawable.crab_card);
+                            break;
+                        default:
+                             imageView.setImageResource(R.drawable.playing_card_empty);
+                            break;
+                    }
+
+                }
+            });
+
         } else {
             gridView = (View) view;
         }
