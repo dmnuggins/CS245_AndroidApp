@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,8 @@ import static cs245.concentration.R.layout.card;
 public class CardAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> cardValues = null;
+
+    int[] cardFlipped = null;
 
     Map<String, Integer> frequency;
     boolean firstCardFlipped = false;
@@ -47,13 +50,17 @@ public class CardAdapter extends BaseAdapter {
             gridView = inflater.inflate(card, viewGroup, false);
             final ImageView imageView = (ImageView) gridView.findViewById(R.id.image);
             imageView.setAdjustViewBounds(true);
-            //Collections.shuffle(cardValues);
+
+            cardFlipped = new int[cardValues.size()];
+            Arrays.fill(cardFlipped, 0); //all un-flipped
+
             final String card = cardValues.get(i);
             imageView.setImageResource(R.drawable.playing_card);
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     if (!firstCardFlipped) {
                         imageView.setImageResource(getImageResource(card));
                         firstCardFlipped = true;
@@ -71,7 +78,6 @@ public class CardAdapter extends BaseAdapter {
                             frequency.remove(secondCard);
                         }
                     }
-
                 }
             });
 
@@ -139,8 +145,9 @@ public class CardAdapter extends BaseAdapter {
         return matches;
     }
 
-    public void flipCard () {
+    public void hideCard (ImageView imageView) {
         //do this later
+        imageView.setImageResource(R.drawable.playing_card);
     }
 
     @Override
