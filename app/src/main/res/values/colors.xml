@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="buttonBarColor">#1a1a1a</color>
     <color name="buttonTextColor">#FFFFFF</color>
+    <color name="tryAgainButtonColor">#545454</color>
 </resources>
