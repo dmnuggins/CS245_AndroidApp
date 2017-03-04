@@ -25,17 +25,16 @@ public class CardAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> cardValues = null;
 
-    int[] cardFlipped = null;
+    private Map<String, Integer> frequency = new HashMap<>();
+    private boolean firstCardFlipped = false;
+    private String firstCard = "";
+    private String firstCardTag = "";
+    private String secondCard = "";
+    private String secondCardTag = "";
 
-    Map<String, Integer> frequency = new HashMap<>();
-    boolean firstCardFlipped = false;
-    String firstCard = "";
-    String firstCardTag = "";
-    String secondCard = "";
-    String secondCardTag = "";
+    private int counter = 0;
 
-    int counter = 0;
-
+    int score = 0;
 
     public CardAdapter(Context context, ArrayList<String> cardValues) {
         this.context = context;
@@ -56,9 +55,6 @@ public class CardAdapter extends BaseAdapter {
 
             final ImageView imageView = (ImageView) gridView.findViewById(R.id.image);
             imageView.setAdjustViewBounds(true);
-
-            cardFlipped = new int[cardValues.size()];
-            Arrays.fill(cardFlipped, 0);
 
             final String card = cardValues.get(i);
             imageView.setImageResource(R.drawable.playing_card);
@@ -87,20 +83,30 @@ public class CardAdapter extends BaseAdapter {
                             frequency.remove(firstCard);
                             frequency.remove(secondCard);
                             int i = 0;
-                            while (i < gv.getChildCount()){
-                                if (gv.getChildAt(i).getTag().toString().equals(firstCardTag)|| gv.getChildAt(i).getTag().toString().equals(secondCardTag)){
+                            while (i < gv.getChildCount()) {
+                                if (gv.getChildAt(i).getTag().toString().equals(firstCardTag) || gv.getChildAt(i).getTag().toString().equals(secondCardTag)) {
                                     gv.getChildAt(i).findViewById(R.id.image).setEnabled(true);
                                 }
                                 i++;
                             }
                             SystemClock.sleep(500);
-                            for (int j = 0; j < gv.getChildCount(); j++){
-                                if (gv.getChildAt(j).getTag().toString().equals(firstCardTag)|| gv.getChildAt(j).getTag().toString().equals(secondCardTag)){
-                                    hideCard((ImageView)gv.getChildAt(j).findViewById(R.id.image));
+                            for (int j = 0; j < gv.getChildCount(); j++) {
+                                if (gv.getChildAt(j).getTag().toString().equals(firstCardTag) || gv.getChildAt(j).getTag().toString().equals(secondCardTag)) {
+                                    hideCard((ImageView) gv.getChildAt(j).findViewById(R.id.image));
                                 }
                             }
+                            score -= 1;
+                            if (score < 0) {
+                                score = 0;
+                            }
+                        } else {
+                            score += 2;
                         }
                     }
+                    //if (isSolved()){
+                    // send to end screen
+                    // intent, send extras (cardValues.size(), score)
+                    //}
                 }
             });
 
@@ -176,7 +182,6 @@ public class CardAdapter extends BaseAdapter {
     public void hideCard(ImageView imageView) {
         //do this later
         imageView.setImageResource(R.drawable.playing_card);
-        //imageView.setEnabled(true);
     }
 
     public void disableAllCards(GridView gridView) {
@@ -189,6 +194,21 @@ public class CardAdapter extends BaseAdapter {
         // do later
     }
 
+    public boolean isSolved() {
+        boolean answer = true;
+        int entries = cardValues.size() / 2;
+        if (frequency.size() == entries) {
+            for (int i : frequency.values()) {
+                if (i != 2) {
+                    answer = false;
+                    break;
+                }
+            }
+        } else {
+            answer = false;
+        }
+        return answer;
+    }
 
     @Override
     public int getCount() {
