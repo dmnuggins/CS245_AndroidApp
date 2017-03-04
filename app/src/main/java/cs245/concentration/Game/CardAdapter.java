@@ -3,6 +3,7 @@ package cs245.concentration.Game;
 import android.content.Context;
 
 import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,11 @@ public class CardAdapter extends BaseAdapter {
     Map<String, Integer> frequency = new HashMap<>();
     boolean firstCardFlipped = false;
     String firstCard = "";
+    String firstCardTag = "";
     String secondCard = "";
+    String secondCardTag = "";
+
+    int counter = 0;
 
 
     public CardAdapter(Context context, ArrayList<String> cardValues) {
@@ -44,17 +49,21 @@ public class CardAdapter extends BaseAdapter {
 
         final View gridView;
 
+        final GridView gv = (GridView) viewGroup;
+
         if (view == null) {
-            //gridView = new View(context);
             gridView = inflater.inflate(card, viewGroup, false);
+
             final ImageView imageView = (ImageView) gridView.findViewById(R.id.image);
             imageView.setAdjustViewBounds(true);
 
             cardFlipped = new int[cardValues.size()];
-            Arrays.fill(cardFlipped, 0); //all un-flipped
+            Arrays.fill(cardFlipped, 0);
 
             final String card = cardValues.get(i);
             imageView.setImageResource(R.drawable.playing_card);
+            imageView.setTag("card" + counter);
+            gridView.setTag("card" + counter);
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,16 +75,30 @@ public class CardAdapter extends BaseAdapter {
                         firstCard = card;
                         addToMap(firstCard);
                         imageView.setEnabled(false);
+                        firstCardTag = imageView.getTag().toString();
                     } else {
                         imageView.setImageResource(getImageResource(card));
                         firstCardFlipped = false;
                         secondCard = card;
                         addToMap(secondCard);
                         imageView.setEnabled(false);
-                        if (!isMatching(firstCard)){
+                        secondCardTag = imageView.getTag().toString();
+                        if (!isMatching(firstCard)) {
                             frequency.remove(firstCard);
                             frequency.remove(secondCard);
-
+                            int i = 0;
+                            while (i < gv.getChildCount()){
+                                if (gv.getChildAt(i).getTag().toString().equals(firstCardTag)|| gv.getChildAt(i).getTag().toString().equals(secondCardTag)){
+                                    gv.getChildAt(i).findViewById(R.id.image).setEnabled(true);
+                                }
+                                i++;
+                            }
+                            SystemClock.sleep(500);
+                            for (int j = 0; j < gv.getChildCount(); j++){
+                                if (gv.getChildAt(j).getTag().toString().equals(firstCardTag)|| gv.getChildAt(j).getTag().toString().equals(secondCardTag)){
+                                    hideCard((ImageView)gv.getChildAt(j).findViewById(R.id.image));
+                                }
+                            }
                         }
                     }
                 }
@@ -84,6 +107,7 @@ public class CardAdapter extends BaseAdapter {
         } else {
             gridView = (View) view;
         }
+        counter++;
         return gridView;
     }
 
@@ -92,43 +116,43 @@ public class CardAdapter extends BaseAdapter {
         switch (card) {
             case "DOLPHIN":
                 drawable = (R.drawable.dolphin_card);
-            break;
+                break;
             case "WHALE":
                 drawable = (R.drawable.whale_card);
-            break;
+                break;
             case "SHARK":
                 drawable = (R.drawable.shark_card);
-            break;
+                break;
             case "OCTOPUS":
                 drawable = (R.drawable.octopus_card);
-            break;
+                break;
             case "RAY":
                 drawable = (R.drawable.ray_card);
-            break;
+                break;
             case "TURTLE":
                 drawable = (R.drawable.turtle_card);
-            break;
+                break;
             case "SEAL":
                 drawable = (R.drawable.seal_card);
-            break;
+                break;
             case "STARFISH":
                 drawable = (R.drawable.starfish_card);
-            break;
+                break;
             case "JELLYFISH":
                 drawable = (R.drawable.jellyfish_card);
-            break;
+                break;
             case "CRAB":
                 drawable = (R.drawable.crab_card);
-            break;
+                break;
             default:
                 drawable = (R.drawable.playing_card_empty);
-            break;
+                break;
         }
         return drawable;
     }
 
-    public void addToMap (String string){
-        if (frequency.isEmpty()){
+    public void addToMap(String string) {
+        if (frequency.isEmpty()) {
             frequency.put(string, 1);
         } else {
             Integer count = frequency.get(string);
@@ -140,7 +164,7 @@ public class CardAdapter extends BaseAdapter {
         }
     }
 
-    public boolean isMatching (String string){
+    public boolean isMatching(String string) {
         boolean matches = false;
         int count = frequency.get(string);
         if (count == 2) {
@@ -149,31 +173,21 @@ public class CardAdapter extends BaseAdapter {
         return matches;
     }
 
-    public void hideCard (ImageView imageView) {
+    public void hideCard(ImageView imageView) {
         //do this later
         imageView.setImageResource(R.drawable.playing_card);
+        //imageView.setEnabled(true);
     }
 
-    public ArrayList<Integer> findPositionsOfCard (GridView gridView, String string) {
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < gridView.getChildCount(); i++){
-            if (gridView.getChildAt(i).toString().equals(string)){
-                list.add(i);
-            }
-        }
-        return list;
-    }
-
-    public void disableAllCards (GridView gridView){
-        for (int i = 0; i < gridView.getChildCount(); i++){
+    public void disableAllCards(GridView gridView) {
+        for (int i = 0; i < gridView.getChildCount(); i++) {
             gridView.getChildAt(i).setEnabled(false);
-            }
         }
+    }
 
-    public void enableValidCards (GridView gridView){
+    public void enableValidCards(GridView gridView) {
         // do later
     }
-
 
 
     @Override

@@ -37,9 +37,9 @@ public class GameActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), gridView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        Toast.makeText(getApplicationContext(), gridView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
+    }
+});
     }
 
     public void newGame(View view) {
