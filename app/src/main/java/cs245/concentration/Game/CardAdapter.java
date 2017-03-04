@@ -57,7 +57,7 @@ public class CardAdapter extends BaseAdapter {
             imageView.setAdjustViewBounds(true);
 
             final String card = cardValues.get(i);
-            imageView.setImageResource(R.drawable.playing_card);
+            //imageView.setImageResource(R.drawable.playing_card);
             imageView.setTag("card" + counter);
             gridView.setTag("card" + counter);
 

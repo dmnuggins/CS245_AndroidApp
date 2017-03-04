@@ -34,18 +34,10 @@ public class GameActivity extends AppCompatActivity {
 
         gridView = (GridView) findViewById(R.id.cardsGridView);
         gridView.setAdapter(new CardAdapter(this, cardList(input)));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getApplicationContext(), gridView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
-    }
-});
     }
 
     public void newGame(View view) {
         Intent intent = new Intent(this, StartActivity.class);
-        // reset everything etc
-        // actually already resets everything so that's nice
         startActivity(intent);
     }
 
