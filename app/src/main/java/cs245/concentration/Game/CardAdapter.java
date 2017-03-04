@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class CardAdapter extends BaseAdapter {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View gridView;
+        final View gridView;
 
         frequency = new HashMap<>();
 
@@ -76,6 +77,7 @@ public class CardAdapter extends BaseAdapter {
                         if (!isMatching(firstCard)){
                             frequency.remove(firstCard);
                             frequency.remove(secondCard);
+
                         }
                     }
                 }
@@ -149,6 +151,28 @@ public class CardAdapter extends BaseAdapter {
         //do this later
         imageView.setImageResource(R.drawable.playing_card);
     }
+
+    public ArrayList<Integer> findPositionsOfCard (GridView gridView, String string) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < gridView.getChildCount(); i++){
+            if (gridView.getChildAt(i).toString().equals(string)){
+                list.add(i);
+            }
+        }
+        return list;
+    }
+
+    public void disableAllCards (GridView gridView){
+        for (int i = 0; i < gridView.getChildCount(); i++){
+            gridView.getChildAt(i).setEnabled(false);
+            }
+        }
+
+    public void enableValidCards (GridView gridView){
+        // do later
+    }
+
+
 
     @Override
     public int getCount() {
