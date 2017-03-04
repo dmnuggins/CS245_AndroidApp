@@ -26,7 +26,7 @@ public class CardAdapter extends BaseAdapter {
 
     int[] cardFlipped = null;
 
-    Map<String, Integer> frequency;
+    Map<String, Integer> frequency = new HashMap<>();
     boolean firstCardFlipped = false;
     String firstCard = "";
     String secondCard = "";
@@ -43,8 +43,6 @@ public class CardAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         final View gridView;
-
-        frequency = new HashMap<>();
 
         if (view == null) {
             //gridView = new View(context);
@@ -130,20 +128,24 @@ public class CardAdapter extends BaseAdapter {
     }
 
     public void addToMap (String string){
-        Integer count = frequency.get(string);
-        if (count == null) {
+        if (frequency.isEmpty()){
             frequency.put(string, 1);
-        }
-        else {
-            frequency.put(string, count + 1);
+        } else {
+            Integer count = frequency.get(string);
+            if (count == null) {
+                frequency.put(string, 1);
+            } else {
+                frequency.put(string, count + 1);
+            }
         }
     }
 
     public boolean isMatching (String string){
         boolean matches = false;
         int count = frequency.get(string);
-        if (count == 2)
+        if (count == 2) {
             matches = true;
+        }
         return matches;
     }
 
