@@ -15,7 +15,7 @@
         android:layout_height="fill_parent"
         android:layout_above="@+id/buttonPanel"
         android:gravity="center"
-        android:numColumns="4"
+        android:numColumns="10"
         android:padding="40dp"
         android:verticalSpacing="2dp"
         android:horizontalSpacing="2dp"
@@ -53,7 +53,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:text="@string/try_again"
-            android:textColor="@color/buttonTextColor" />
+            android:textColor="@color/buttonTextColor"
+            android:background="@color/tryAgainButtonColor"/>
 
         <Button
             android:id="@+id/endGameButton"

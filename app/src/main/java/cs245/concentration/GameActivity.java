@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -17,6 +15,7 @@ import cs245.concentration.Game.CardAdapter;
 public class GameActivity extends AppCompatActivity {
 
     GridView gridView;
+    CardAdapter cardAdapter;
     int input = 0;
 
     private final String[] answers = new String[]{
@@ -32,20 +31,30 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = getIntent();
         input = intent.getIntExtra("input", 0);
 
+       cardAdapter = new CardAdapter(this, cardList(input));
+
         gridView = (GridView) findViewById(R.id.cardsGridView);
-        gridView.setAdapter(new CardAdapter(this, cardList(input)));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), gridView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        gridView.setAdapter(cardAdapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // find way to save gridview stuff
     }
 
     public void newGame(View view) {
         Intent intent = new Intent(this, StartActivity.class);
-        // reset everything etc
-        // actually already resets everything so that's nice
         startActivity(intent);
     }
 
