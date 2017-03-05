@@ -46,7 +46,7 @@ public class GameActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.cardsGridView);
         gridView.setAdapter(cardAdapter);
 
-        player = MediaPlayer.create(this, R.raw.metal_gear_solid_alert_theme);
+        player = MediaPlayer.create(this, R.raw.metal_gear_background);
         player.setLooping(true);
         player.setVolume(100,100);
         player.start();
