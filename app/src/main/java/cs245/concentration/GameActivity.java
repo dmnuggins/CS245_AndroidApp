@@ -46,7 +46,7 @@ public class GameActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.cardsGridView);
         gridView.setAdapter(cardAdapter);
 
-        player = MediaPlayer.create(this, R.raw.metal_gear_background);
+        player = MediaPlayer.create(this, R.raw.metal_gear_solid_alert_theme);
         player.setLooping(true);
         player.setVolume(100,100);
         player.start();
@@ -112,6 +112,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         if (this.isFinishing()){ //basically BACK was pressed from this activity
             player.stop();
+            Toast.makeText(GameActivity.this, "YOU PRESSED BACK FROM YOUR 'HOME/MAIN' ACTIVITY", Toast.LENGTH_SHORT).show();
         }
         Context context = getApplicationContext();
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -120,6 +121,12 @@ public class GameActivity extends AppCompatActivity {
             ComponentName topActivity = taskInfo.get(0).topActivity;
             if (!topActivity.getPackageName().equals(context.getPackageName())) {
                 player.stop();
+                Toast.makeText(GameActivity.this, "YOU LEFT YOUR APP", Toast.LENGTH_SHORT).show();
+            }
+            else {
+
+                Toast.makeText(GameActivity.this, "YOU SWITCHED ACTIVITIES WITHIN YOUR APP", Toast.LENGTH_SHORT).show();
+
             }
         }
         super.onPause();
