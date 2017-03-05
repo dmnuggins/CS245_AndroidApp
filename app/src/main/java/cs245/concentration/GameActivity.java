@@ -1,14 +1,23 @@
 package cs245.concentration;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import cs245.concentration.Game.CardAdapter;
 
@@ -16,6 +25,7 @@ public class GameActivity extends AppCompatActivity {
 
     GridView gridView;
     CardAdapter cardAdapter;
+    MediaPlayer player;
     int input = 0;
 
     private final String[] answers = new String[]{
@@ -35,6 +45,25 @@ public class GameActivity extends AppCompatActivity {
 
         gridView = (GridView) findViewById(R.id.cardsGridView);
         gridView.setAdapter(cardAdapter);
+
+        player = MediaPlayer.create(this, R.raw.metal_gear_solid_alert_theme);
+        player.setLooping(true);
+        player.setVolume(100,100);
+        player.start();
+
+
+
+        Button musicOnOff = (Button) findViewById(R.id.musicButton);
+        musicOnOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(player.isPlaying()) {
+                    player.pause();
+                } else {
+                    player.start();
+                }
+            }
+        });
     }
 
     @Override
@@ -56,6 +85,7 @@ public class GameActivity extends AppCompatActivity {
     public void newGame(View view) {
         Intent intent = new Intent(this, StartActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void tryAgain(View vew) {
@@ -78,5 +108,28 @@ public class GameActivity extends AppCompatActivity {
         return list;
     }
 
+    @Override
+    protected void onPause() {
+        if (this.isFinishing()){ //basically BACK was pressed from this activity
+            player.stop();
+            Toast.makeText(GameActivity.this, "YOU PRESSED BACK FROM YOUR 'HOME/MAIN' ACTIVITY", Toast.LENGTH_SHORT).show();
+        }
+        Context context = getApplicationContext();
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        if (!taskInfo.isEmpty()) {
+            ComponentName topActivity = taskInfo.get(0).topActivity;
+            if (!topActivity.getPackageName().equals(context.getPackageName())) {
+                player.stop();
+                Toast.makeText(GameActivity.this, "YOU LEFT YOUR APP", Toast.LENGTH_SHORT).show();
+            }
+            else {
+
+                Toast.makeText(GameActivity.this, "YOU SWITCHED ACTIVITIES WITHIN YOUR APP", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+        super.onPause();
+    }
 
 }
