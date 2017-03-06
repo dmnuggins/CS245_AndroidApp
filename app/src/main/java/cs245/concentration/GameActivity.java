@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.GridView;
@@ -22,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
     CardAdapter cardAdapter;
     MediaPlayer player;
     int input = 0;
-    int position;
+    int position = 0;
 
     private final String[] answers = new String[]{
             "DOLPHIN", "WHALE", "SHARK", "OCTOPUS", "RAY", "TURTLE", "SEAL", "STARFISH", "JELLYFISH", "CRAB"
@@ -43,8 +44,8 @@ public class GameActivity extends AppCompatActivity {
         gridView.setAdapter(cardAdapter);
 
         player = MediaPlayer.create(this, R.raw.mii_channel_loop);
+        player.seekTo(position);
         player.setLooping(true);
-        player.setVolume(100,100);
         player.start();
     }
 
@@ -61,7 +62,14 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt("position", position);
         // find way to save gridview stuff
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle saveInstanceState) {
+        super.onRestoreInstanceState(saveInstanceState);
+        position = saveInstanceState.getInt("position");
     }
 
     public void newGame(View view) {
@@ -111,27 +119,4 @@ public class GameActivity extends AppCompatActivity {
         super.onResume();
     }
 
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            if(player == null) {
-//                player = MediaPlayer.create(this, R.raw.mii_channel_loop);
-//            }
-//            player.seekTo(position);
-//            player.setLooping(true);
-//            player.start();
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//            if(player == null) {
-//                player = MediaPlayer.create(this, R.raw.mii_channel_loop);
-//            }
-//            player.seekTo(position);
-//            player.setLooping(true);
-//            player.start();
-//        }
-//
-//        super.onConfigurationChanged(newConfig);
-//
-//
-//    }
 }
