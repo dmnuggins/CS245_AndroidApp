@@ -47,6 +47,8 @@ public class GameActivity extends AppCompatActivity {
         player.seekTo(position);
         player.setLooping(true);
         player.start();
+
+
     }
 
     @Override
