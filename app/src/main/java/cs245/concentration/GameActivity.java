@@ -23,11 +23,7 @@ public class GameActivity extends AppCompatActivity {
     CardAdapter cardAdapter;
     MediaPlayer player;
     int input = 0;
-    int position;
-
-    private static final String TAG_RETAINED_FRAGMENT = "RetainedFragment";
-    private MusicFragment musicFragment;
-
+    int position = 0;
 
     private final String[] answers = new String[]{
             "DOLPHIN", "WHALE", "SHARK", "OCTOPUS", "RAY", "TURTLE", "SEAL", "STARFISH", "JELLYFISH", "CRAB"
@@ -39,15 +35,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        FragmentManager fm = getFragmentManager();
-        musicFragment = (MusicFragment) fm.findFragmentByTag(TAG_RETAINED_FRAGMENT);
-
-        if (musicFragment == null) {
-            musicFragment = new MusicFragment();
-            fm.beginTransaction().add(musicFragment, TAG_RETAINED_FRAGMENT).commit();
-            musicFragment.setPlayer(musicFragment.getPlayer());
-        }
-
         Intent intent = getIntent();
         input = intent.getIntExtra("input", 0);
 
@@ -56,9 +43,7 @@ public class GameActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.cardsGridView);
         gridView.setAdapter(cardAdapter);
 
-        if(player == null) {
-            player = MediaPlayer.create(this, R.raw.mii_channel_loop);
-        }
+        player = MediaPlayer.create(this, R.raw.mii_channel_loop);
         player.seekTo(position);
         player.setLooping(true);
         player.start();
@@ -71,24 +56,20 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if(player!=null) {
-            position = player.getCurrentPosition();
-            player.stop();
-            player.release();
-            player = null;
-        }
         super.onDestroy();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt("position", position);
         // find way to save gridview stuff
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle saveInstanceState) {
         super.onRestoreInstanceState(saveInstanceState);
+        position = saveInstanceState.getInt("position");
     }
 
     public void newGame(View view) {
@@ -136,34 +117,6 @@ public class GameActivity extends AppCompatActivity {
         player.setLooping(true);
         player.start();
         super.onResume();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-
-            if(player == null) {
-                player = MediaPlayer.create(this, R.raw.mii_channel_loop);
-            }
-            player.seekTo(position);
-            player.setLooping(true);
-            player.start();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-
-            if(player == null) {
-                player = MediaPlayer.create(this, R.raw.mii_channel_loop);
-            }
-            player.seekTo(position);
-            player.setLooping(true);
-            player.start();
-        }
-
-        super.onConfigurationChanged(newConfig);
-
     }
 
 }
