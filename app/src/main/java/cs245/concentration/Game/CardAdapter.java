@@ -1,7 +1,9 @@
 package cs245.concentration.Game;
 
+import android.app.Activity;
 import android.content.Context;
 
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +26,7 @@ import static cs245.concentration.R.layout.card;
 
 public class CardAdapter extends BaseAdapter {
     private Context context;
+    private Activity mActivity;
     private ArrayList<String> cardValues = null;
 
     private Map<String, Integer> frequency = new HashMap<>();
@@ -36,8 +40,9 @@ public class CardAdapter extends BaseAdapter {
 
     int score = 0;
 
-    public CardAdapter(Context context, ArrayList<String> cardValues) {
+    public CardAdapter(Context context, Activity activity, ArrayList<String> cardValues) {
         this.context = context;
+        this.mActivity = activity;
         this.cardValues = cardValues;
     }
 
@@ -57,7 +62,7 @@ public class CardAdapter extends BaseAdapter {
             imageView.setAdjustViewBounds(true);
 
             final String card = cardValues.get(i);
-            //imageView.setImageResource(R.drawable.playing_card);
+            imageView.setImageResource(R.drawable.playing_card);
             imageView.setTag("card" + counter);
             gridView.setTag("card" + counter);
 
@@ -66,7 +71,7 @@ public class CardAdapter extends BaseAdapter {
                 public void onClick(View view) {
 
                     if (!firstCardFlipped) {
-                        imageView.setImageResource(getImageResource(card));
+                        imageView.setImageDrawable(getImageDrawable(card));
                         firstCardFlipped = true;
                         firstCard = card;
                         addToMap(firstCard);
@@ -89,7 +94,8 @@ public class CardAdapter extends BaseAdapter {
                                 }
                                 i++;
                             }
-                            SystemClock.sleep(500);
+                            notifyDataSetChanged();
+                            //SystemClock.sleep(500);
                             for (int j = 0; j < gv.getChildCount(); j++) {
                                 if (gv.getChildAt(j).getTag().toString().equals(firstCardTag) || gv.getChildAt(j).getTag().toString().equals(secondCardTag)) {
                                     hideCard((ImageView) gv.getChildAt(j).findViewById(R.id.image));
@@ -102,14 +108,17 @@ public class CardAdapter extends BaseAdapter {
                         } else {
                             score += 2;
                         }
-                    }
-                    //if (isSolved()){
-                    // send to end screen
-                    // intent, send extras (cardValues.size(), score)
-                    //}
-                }
-            });
 
+                        if (isSolved()) {
+                            //send to end screen
+                            //intent, send extras (cardValues.size(), score)
+                            Toast toast2 = Toast.makeText(context, "Solved!", Toast.LENGTH_SHORT);
+                            toast2.show();
+                        }
+                    }
+                }
+
+            });
         } else {
             gridView = (View) view;
         }
@@ -156,6 +165,50 @@ public class CardAdapter extends BaseAdapter {
         }
         return drawable;
     }
+
+    public Drawable getImageDrawable(String card) {
+        Drawable drawable;
+        Resources resources = context.getResources();
+        Resources.Theme theme = context.getTheme();
+        switch (card) {
+            case "DOLPHIN":
+                drawable = resources.getDrawable(R.drawable.dolphin_card, theme);
+                break;
+            case "WHALE":
+                drawable = resources.getDrawable(R.drawable.whale_card, theme);
+                break;
+            case "SHARK":
+                drawable = resources.getDrawable(R.drawable.shark_card, theme);
+                break;
+            case "OCTOPUS":
+                drawable = resources.getDrawable(R.drawable.octopus_card, theme);
+                break;
+            case "RAY":
+                drawable = resources.getDrawable(R.drawable.ray_card, theme);
+                break;
+            case "TURTLE":
+                drawable = resources.getDrawable(R.drawable.turtle_card, theme);
+                break;
+            case "SEAL":
+                drawable = resources.getDrawable(R.drawable.seal_card, theme);
+                break;
+            case "STARFISH":
+                drawable = resources.getDrawable(R.drawable.starfish_card, theme);
+                break;
+            case "JELLYFISH":
+                drawable = resources.getDrawable(R.drawable.jellyfish_card, theme);
+                break;
+            case "CRAB":
+                drawable = resources.getDrawable(R.drawable.crab_card, theme);
+                break;
+            default:
+                drawable = resources.getDrawable(R.drawable.playing_card_empty, theme);
+                break;
+        }
+        return drawable;
+    }
+
+
 
     public void addToMap(String string) {
         if (frequency.isEmpty()) {

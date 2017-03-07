@@ -38,7 +38,7 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = getIntent();
         input = intent.getIntExtra("input", 0);
 
-       cardAdapter = new CardAdapter(this, cardList(input));
+       cardAdapter = new CardAdapter(this, this, cardList(input));
 
         gridView = (GridView) findViewById(R.id.cardsGridView);
         gridView.setAdapter(cardAdapter);
