@@ -17,10 +17,6 @@ public class StartActivity extends AppCompatActivity{
     Button submit;
     EditText userInput;
 
-    private static final String TAG_RETAINED_FRAGMENT = "RetainedFragment";
-
-    private MusicFragment mRetainedFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,29 +50,10 @@ public class StartActivity extends AppCompatActivity{
                 }
         });
 
-        // find the retained fragment on activity restarts
-        FragmentManager fm = getFragmentManager();
-        mRetainedFragment = (MusicFragment) fm.findFragmentByTag(TAG_RETAINED_FRAGMENT);
-
-        // create the fragment and data the first time
-        if (mRetainedFragment == null) {
-            // add the fragment
-            mRetainedFragment = new MusicFragment();
-            fm.beginTransaction().add(mRetainedFragment, TAG_RETAINED_FRAGMENT).commit();
-            // load data from a data source or perform any calculation
-            mRetainedFragment.setData(mRetainedFragment.getData());
-        }
-
     }
 
     @Override
     public void onPause() {
-        if(isFinishing()) {
-            FragmentManager fm = getFragmentManager();
-            // we will not need this fragment anymore, this may also be a good place to signal
-            // to the retained fragment object to perform its own cleanup.
-            fm.beginTransaction().remove(mRetainedFragment).commit();
-        }
         super.onPause();
     }
 }

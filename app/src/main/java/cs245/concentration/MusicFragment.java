@@ -17,7 +17,7 @@ public class MusicFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // retain this fragment
 
-        player = MediaPlayer.create(getActivity(), R.raw.metal_gear_background);
+        player = MediaPlayer.create(getActivity(), R.raw.mii_channel_loop);
         player.setLooping(true);
         player.start();
 
@@ -30,6 +30,23 @@ public class MusicFragment extends Fragment {
 
     public MediaPlayer getData() {
         return player;
+    }
+
+
+
+    public void pause() {
+        player.pause();
+    }
+    public void play() {
+        player.start();
+    }
+
+    public void toggleMusic() {
+        if(player.isPlaying()) {
+            player.pause();
+        } else {
+            player.start();
+        }
     }
 
 }
