@@ -61,7 +61,7 @@ public class GameActivity extends AppCompatActivity {
             mRetainedFragment.setData(mRetainedFragment.getData());
         }
 
-/*
+
 
         Button musicBtn = (Button) findViewById(R.id.musicButton);
 
@@ -72,7 +72,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-*/
+
 
 
     }
