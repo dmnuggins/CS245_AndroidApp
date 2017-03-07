@@ -1,5 +1,6 @@
 package cs245.concentration;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,6 @@ public class StartActivity extends AppCompatActivity{
 
     Button submit;
     EditText userInput;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +50,10 @@ public class StartActivity extends AppCompatActivity{
                 }
         });
 
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

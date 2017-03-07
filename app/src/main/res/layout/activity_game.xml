@@ -68,4 +68,13 @@
             android:text="@string/end_game"
             android:textColor="@color/buttonTextColor" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/musicButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Music on/off"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

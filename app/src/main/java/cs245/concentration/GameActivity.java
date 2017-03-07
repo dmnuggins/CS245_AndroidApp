@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -24,6 +25,10 @@ public class GameActivity extends AppCompatActivity {
     MediaPlayer player;
     int input = 0;
     int position = 0;
+
+    private static final String TAG_RETAINED_FRAGMENT = "RetainedFragment";
+
+    private MusicFragment mRetainedFragment;
 
     private final String[] answers = new String[]{
             "DOLPHIN", "WHALE", "SHARK", "OCTOPUS", "RAY", "TURTLE", "SEAL", "STARFISH", "JELLYFISH", "CRAB"
@@ -43,10 +48,33 @@ public class GameActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.cardsGridView);
         gridView.setAdapter(cardAdapter);
 
-        player = MediaPlayer.create(this, R.raw.mii_channel_loop);
-        player.seekTo(position);
-        player.setLooping(true);
-        player.start();
+        // find the retained fragment on activity restarts
+        FragmentManager manager = getFragmentManager();
+        mRetainedFragment = (MusicFragment) manager.findFragmentByTag(TAG_RETAINED_FRAGMENT);
+
+        // create the fragment and data the first time
+        if (mRetainedFragment == null) {
+            // add the fragment
+            mRetainedFragment = new MusicFragment();
+            manager.beginTransaction().add(mRetainedFragment, TAG_RETAINED_FRAGMENT).commit();
+            // load data from a data source or perform any calculation
+            mRetainedFragment.setData(mRetainedFragment.getData());
+        }
+
+
+
+        Button musicBtn = (Button) findViewById(R.id.musicButton);
+
+        musicBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRetainedFragment.toggleMusic();
+            }
+        });
+
+
+
+
     }
 
     @Override
@@ -77,7 +105,7 @@ public class GameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void tryAgain(View vew) {
+    public void tryAgain(View view) {
         // will do later
     }
 
@@ -99,23 +127,18 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        if(player != null) {
-            position = player.getCurrentPosition();
-            player.release();
-            player = null;
+
+        if(isFinishing()) {
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().remove(mRetainedFragment).commit();
         }
+        mRetainedFragment.pause();
         super.onPause();
     }
 
     @Override
     public void onResume() {
-
-        if(player == null) {
-            player = MediaPlayer.create(this, R.raw.mii_channel_loop);
-        }
-        player.seekTo(position);
-        player.setLooping(true);
-        player.start();
+        mRetainedFragment.play();
         super.onResume();
     }
 
