@@ -25,39 +25,39 @@
         android:id="@+id/musicButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Music on/off"
-        android:layout_below="@+id/gameActionBar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/gameActionBar"
+        android:text="Music on/off" />
 
     <Button
         android:id="@+id/newGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Game"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
         android:layout_toStartOf="@+id/endGame"
-        android:layout_marginEnd="20dp" />
+        android:text="New Game"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <Button
         android:id="@+id/check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:layout_alignBaseline="@+id/musicButton"
         android:layout_alignBottom="@+id/musicButton"
-        android:layout_toEndOf="@+id/musicButton" />
+        android:layout_toEndOf="@+id/musicButton"
+        android:text="Check"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <Button
         android:id="@+id/endGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="End Game"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:text="End Game"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <EditText
         android:id="@+id/score"
@@ -66,10 +66,10 @@
         android:layout_above="@+id/TableLayout03"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/check"
+        android:backgroundTint="@android:color/white"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Score"
-        android:backgroundTint="@android:color/white"
         android:textColor="@color/buttonTextColor"
         android:textStyle="bold" />
 
@@ -77,14 +77,18 @@
         android:id="@+id/TableLayout03"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/musicButton"
-        android:layout_alignParentBottom="true">
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:stretchColumns="*">
 
         <TableRow
             android:id="@+id/TableRow01"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <ImageView
                 android:id="@+id/imageView"

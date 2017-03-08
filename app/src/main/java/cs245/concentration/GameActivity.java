@@ -24,6 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.MarginLayoutParamsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,8 +35,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -90,7 +95,7 @@ public class GameActivity extends AppCompatActivity {
         check = (Button) findViewById(R.id.check);
         endGame = (Button) findViewById(R.id.endGame);
         loadImages();
-        backImage =  getResources().getDrawable(R.drawable.icon);
+        backImage =  getResources().getDrawable(R.drawable.playing_card);
         buttonListener = new ButtonListener();
         mainTable = (TableLayout)findViewById(R.id.TableLayout03);
         context  = mainTable.getContext();
@@ -429,8 +434,9 @@ public class GameActivity extends AppCompatActivity {
     // method: createImageButton()
     // purpose: This method create a button with its image.
     private View createImageButton(int x, int y){
-        Button button = new Button(context);
+        ImageButton button = new ImageButton(context);
         button.setBackgroundDrawable(backImage);
+        button.setScaleType(ImageView.ScaleType.FIT_XY);
         button.setId(100*x+y);
         button.setOnClickListener(buttonListener);
 
@@ -449,11 +455,11 @@ public class GameActivity extends AppCompatActivity {
             int id = v.getId();
             int x = id / 100;
             int y = id % 100;
-            turnCard((Button) v, x, y);
+            turnCard((ImageButton) v, x, y);
         }
         // method: turnCard()
         // purpose: turn a card over when it's clicked.
-        private void turnCard(Button button, int x, int y) {
+        private void turnCard(ImageButton button, int x, int y) {
             button.setBackgroundDrawable(images.get(cards[x][y]));
 
             if (firstCard == null) {
