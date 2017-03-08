@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -197,6 +198,7 @@ public class GameActivity extends AppCompatActivity {
                                             i.putExtra("score", score);
                                             startActivity(i);
                                             //move.setVisibility(View.VISIBLE);
+                                            finish();
                                         }
                                     })
                             .setNegativeButton("Cancel",
@@ -254,8 +256,8 @@ public class GameActivity extends AppCompatActivity {
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(GameActivity.this, StartActivity.class);
-                startActivity(i);
+                finish();
+                finishActivity(107);
             }
         });
         /*
@@ -323,9 +325,10 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
             case R.id.gameActionBar:
-                finish();
-                finishActivity(107);
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

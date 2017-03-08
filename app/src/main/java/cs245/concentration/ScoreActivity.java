@@ -15,8 +15,12 @@ package cs245.concentration;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -60,5 +64,27 @@ public class ScoreActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(this, "Swipe left for more scores!", Toast.LENGTH_LONG);
         toast.show();
+
+        // up navigation
+        Toolbar myChildToolbar =  (Toolbar) findViewById(R.id.scoreActionBar);
+        setSupportActionBar(myChildToolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        ab.setDisplayHomeAsUpEnabled(true);
+    }
+
+    // method: onOptionsItemsSelected
+    // purpose: this method runs when the user selects from the action bar.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case R.id.scoreActionBar:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
