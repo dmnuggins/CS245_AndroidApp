@@ -71,12 +71,12 @@ public class ScoreActivity extends AppCompatActivity {
 
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
-
         ab.setDisplayHomeAsUpEnabled(true);
     }
 
     // method: onOptionsItemsSelected
-    // purpose: this method runs when the user selects from the action bar.
+    // purpose: this method runs when the user selects from the action bar, navigating back to the
+    //          parent activity (StartActivity)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
