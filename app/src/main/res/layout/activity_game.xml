@@ -16,7 +16,7 @@
         android:layout_above="@+id/buttonPanel"
         android:gravity="center"
         android:horizontalSpacing="2dp"
-        android:numColumns="4"
+        android:numColumns="auto_fit"
         android:padding="@dimen/grid_view_padding"
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp" />
@@ -73,8 +73,8 @@
         android:id="@+id/musicButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Music on/off"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Music on/off" />
 </RelativeLayout>

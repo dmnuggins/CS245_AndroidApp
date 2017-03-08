@@ -52,8 +52,7 @@ public class CardAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         final View gridView;
-
-        final GridView gv = (GridView) viewGroup;
+        final StaticGridView gv = (StaticGridView) viewGroup;
 
         if (view == null) {
             gridView = inflater.inflate(card, viewGroup, false);
@@ -78,12 +77,13 @@ public class CardAdapter extends BaseAdapter {
                         imageView.setEnabled(false);
                         firstCardTag = imageView.getTag().toString();
                     } else {
-                        imageView.setImageResource(getImageResource(card));
+                        imageView.setImageDrawable(getImageDrawable(card));
                         firstCardFlipped = false;
                         secondCard = card;
                         addToMap(secondCard);
                         imageView.setEnabled(false);
                         secondCardTag = imageView.getTag().toString();
+
                         if (!isMatching(firstCard)) {
                             frequency.remove(firstCard);
                             frequency.remove(secondCard);
@@ -94,7 +94,6 @@ public class CardAdapter extends BaseAdapter {
                                 }
                                 i++;
                             }
-                            notifyDataSetChanged();
                             //SystemClock.sleep(500);
                             for (int j = 0; j < gv.getChildCount(); j++) {
                                 if (gv.getChildAt(j).getTag().toString().equals(firstCardTag) || gv.getChildAt(j).getTag().toString().equals(secondCardTag)) {
@@ -261,6 +260,14 @@ public class CardAdapter extends BaseAdapter {
             answer = false;
         }
         return answer;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public ArrayList<String> getCardValues() {
+        return cardValues;
     }
 
     @Override
