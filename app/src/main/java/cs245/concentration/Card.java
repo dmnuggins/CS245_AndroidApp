@@ -15,14 +15,15 @@ package cs245.concentration;
 
 import android.widget.Button;
 
+class Card{
 
-public class Card{
+    int x;
+    int y;
+    Button button;
 
-    public int x;
-    public int y;
-    public Button button;
-
-    public Card(Button button, int x,int y) {
+    // method: Card
+    // purpose: this method acts as the class constructor.
+    Card(Button button, int x,int y) {
         this.x = x;
         this.y=y;
         this.button=button;

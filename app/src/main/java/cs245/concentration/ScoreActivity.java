@@ -29,6 +29,9 @@ public class ScoreActivity extends AppCompatActivity {
 
     MySQLiteHelper db;
 
+    // method: onCreate
+    // purpose: This method takes input of the recent score and adds it
+    // to the database. Furthermore, initializes the ViewPager and Button.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

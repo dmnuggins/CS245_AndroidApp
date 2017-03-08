@@ -22,6 +22,9 @@ public class MusicFragment extends Fragment {
     MediaPlayer player;
     boolean toggled = false;
 
+    // method: onCreate
+    // purpose: this method creates a Media Player when started and starts
+    //  playing music in the app.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,21 +37,28 @@ public class MusicFragment extends Fragment {
         setRetainInstance(true);
     }
 
+    // method: setPlayer
+    // purpose: Player setter
     public void setPlayer(MediaPlayer player) {
         this.player = player;
     }
 
+    // method: getPlayer
+    // purpose: Player getter
     public MediaPlayer getPlayer() {
         return player;
     }
 
-    // Pauses MediaPlayer
+    // method: pause
+    // purpose: Pauses Media Player at that given point
     public void pause() { player.pause(); }
 
-    // Starts/restarts MediaPLayer
+    // method: play
+    // purpose: starts or restarts MediaPlayer, depending on circumstances.
     public void play() { player.start(); }
 
-    // Toggles music to pause and changes boolean toggled
+    // method: toggleMusic
+    // purpose: provides a toggle for the music playing in the app.
     public void toggleMusic() {
         if(player.isPlaying()) {
             player.pause();
@@ -58,7 +68,8 @@ public class MusicFragment extends Fragment {
             toggled = false;
         }
     }
-    // returns toggled
+    // method: getToggled
+    // purpose: Toggled getter
     public boolean getToggled() {
         return toggled;
     }
