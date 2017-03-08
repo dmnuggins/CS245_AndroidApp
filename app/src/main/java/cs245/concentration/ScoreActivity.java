@@ -2,6 +2,7 @@ package cs245.concentration;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
@@ -34,11 +35,13 @@ public class ScoreActivity extends AppCompatActivity {
         int difficulty = intent.getIntExtra("difficulty", 0);
         String name = intent.getStringExtra("name");
         int score = intent.getIntExtra("score", 0);
-        nameTxt = (TextView) findViewById(R.id.name);
-        scoreTxt = (TextView) findViewById(R.id.score);
-        diffcultyTxt = (TextView) findViewById(R.id.difficulty);
+//        nameTxt = (TextView) findViewById(R.id.name);
+//        scoreTxt = (TextView) findViewById(R.id.score);
+//        diffcultyTxt = (TextView) findViewById(R.id.difficulty);
 
         db = new MySQLiteHelper(this);
+
+        db.addScore(new Score(Integer.toString(difficulty), name, Integer.toString(score)));
 
 //        db.addScore(new Score("4", "lee", "5"));
 //        db.addScore(new Score("8", "lee", "9"));
@@ -62,9 +65,10 @@ public class ScoreActivity extends AppCompatActivity {
         //name = intent.getStringExtra("name");
         //score = intent.getIntExtra("score", 0);
 
-        scoreTxt.setText(Integer.toString(score));
-        nameTxt.setText(name);
-        diffcultyTxt.setText(Integer.toString(difficulty));
+//        scoreTxt.setText(Integer.toString(score));
+//        nameTxt.setText(name);
+//        diffcultyTxt.setText(Integer.toString(difficulty));
 
 
+    }
 }
