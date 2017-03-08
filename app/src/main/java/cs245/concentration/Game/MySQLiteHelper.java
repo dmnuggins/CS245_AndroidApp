@@ -13,9 +13,7 @@ import java.util.List;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
-    // Database Version
     private static final int DATABASE_VERSION = 1;
-    // Database Name
     private static final String DATABASE_NAME = "ScoreDB";
 
     public MySQLiteHelper(Context context) {
@@ -24,7 +22,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // SQL statement to create book table
         String CREATE_SCORE_TABLE = "CREATE TABLE scores (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "difficulty TEXT NOT NULL, "+
@@ -41,7 +38,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         // create fresh table
         this.onCreate(db);
     }
-
 
     // Scores table name
     private static final String TABLE_SCORES = "scores";

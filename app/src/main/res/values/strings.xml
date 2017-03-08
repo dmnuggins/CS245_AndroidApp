@@ -4,14 +4,15 @@
     <string name="new_game">New Game</string>
     <string name="end_game">End Game</string>
     <string name="card_description">Concentration Card</string>
+    <string name="reset_scores">Reset Scores</string>
 
-    <string name="four">Difficulty 4 Scores</string>
-    <string name="six">Difficulty 6 Scores</string>
-    <string name="eight">Difficulty 8 Scores</string>
-    <string name="ten">Difficulty 10 Scores</string>
-    <string name="twelve">Difficulty 12 Scores</string>
-    <string name="fourteen">Difficulty 14 Scores</string>
-    <string name="sixteen">Difficulty 16 Scores</string>
-    <string name="eighteen">Difficulty 18 Scores</string>
-    <string name="twenty">Difficulty 20 Scores</string>
+    <string name="four">Difficulty 4</string>
+    <string name="six">Difficulty 6</string>
+    <string name="eight">Difficulty 8</string>
+    <string name="ten">Difficulty 10</string>
+    <string name="twelve">Difficulty 12</string>
+    <string name="fourteen">Difficulty 14</string>
+    <string name="sixteen">Difficulty 16</string>
+    <string name="eighteen">Difficulty 18</string>
+    <string name="twenty">Difficulty 20</string>
 </resources>

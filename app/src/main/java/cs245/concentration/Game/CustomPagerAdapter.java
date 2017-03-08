@@ -5,7 +5,6 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,15 +35,15 @@ public class CustomPagerAdapter extends PagerAdapter {
             List<Score> scoreList = db.getDifficultyScores(array[position]);
             if (scoreList.size() > 0) {
                 Score score = scoreList.get(0);
-                score1.setText("User: " + score.getUsername() + "\t\tScore: " + score.getScore());
+                score1.setText("Score: " + score.getScore() + " \t\t\t\tby " + score.getUsername());
             }
             if (scoreList.size() > 1) {
                 Score score = scoreList.get(1);
-                score2.setText("User: " + score.getUsername() + "\t\tScore: " + score.getScore());
+                score2.setText("Score: " + score.getScore() + " \t\t\t\tby " + score.getUsername());
             }
             if (scoreList.size() > 2) {
                 Score score = scoreList.get(2);
-                score3.setText("User: " + score.getUsername() + "\t\tScore: " + score.getScore());
+                score3.setText("Score: " + score.getScore() + " \t\t\t\tby " + score.getUsername());
             }
             collection.addView(layout);
 
