@@ -16,7 +16,7 @@
         android:layout_above="@+id/buttonPanel"
         android:gravity="center"
         android:horizontalSpacing="2dp"
-        android:numColumns="4"
+        android:numColumns="auto_fit"
         android:padding="@dimen/grid_view_padding"
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp" />
