@@ -1,3 +1,16 @@
+/***************************************************************
+ * file: MySQLiteHelper.java
+ * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
+ * class: CS 245 – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 3/07/2017
+ *
+ * purpose: This program is the SQLite helper class to make
+ *          database queries easier as the database is updated
+ *
+ ****************************************************************/
+
 package cs245.concentration.Game;
 
 import android.content.ContentValues;

@@ -1,12 +1,21 @@
+/***************************************************************
+ * file: MusicFragment.java
+ * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
+ * class: CS 245 – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 3/07/2017
+ *
+ * purpose: This class acts as a Fragment to control music being
+ *          played throughout the app.
+ *
+ ****************************************************************/
+
 package cs245.concentration;
 
 import android.app.Fragment;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-
-/**
- * Created by dmnguyen on 3/6/17.
- */
 
 public class MusicFragment extends Fragment {
 

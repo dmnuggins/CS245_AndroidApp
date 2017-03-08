@@ -1,3 +1,16 @@
+/***************************************************************
+ * file: CustomPagerAdapter.java
+ * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
+ * class: CS 245 – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 3/07/2017
+ *
+ * purpose: This program acts as a custom adapter for the high
+ *          score ViewPager, collecting scores and adding them
+ *          to the high score database.
+ *
+ ****************************************************************/
 package cs245.concentration.Game;
 
 import android.content.Context;

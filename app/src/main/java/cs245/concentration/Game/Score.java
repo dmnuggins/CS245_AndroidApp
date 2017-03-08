@@ -1,3 +1,16 @@
+/***************************************************************
+ * file: Score.java
+ * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
+ * class: CS 245 – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 3/07/2017
+ *
+ * purpose: This class acts as the Score object to be taken after
+ *          a completed game or as database input.
+ *
+ ****************************************************************/
+
 package cs245.concentration.Game;
 
 public class Score {

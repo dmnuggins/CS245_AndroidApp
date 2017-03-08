@@ -1,3 +1,17 @@
+/***************************************************************
+ * file: GameActivity.java
+ * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
+ * class: CS 245 – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 3/07/2017
+ *
+ * purpose: This program runs the activity in which the
+ *          Concentration game is played. All the logic of
+ *          the game is contained in here as well.
+ *
+ ****************************************************************/
+
 package cs245.concentration;
 
 import android.app.FragmentManager;

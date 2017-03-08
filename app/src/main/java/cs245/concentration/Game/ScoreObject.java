@@ -1,3 +1,16 @@
+/***************************************************************
+ * file: ScoreObject.java
+ * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
+ * class: CS 245 – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 3/07/2017
+ *
+ * purpose: This enum contains every layout for each game
+ *          difficulty.
+ *
+ ****************************************************************/
+
 package cs245.concentration.Game;
 
 import cs245.concentration.R;

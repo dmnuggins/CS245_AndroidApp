@@ -1,19 +1,26 @@
+/***************************************************************
+ * file: StartActivity.java
+ * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
+ * class: CS 245 – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 3/07/2017
+ *
+ * purpose: This activity is where the user lands on app start,
+ *          and can lead to playing the game or viewing high
+ *          scores.
+ *
+ ****************************************************************/
+
 package cs245.concentration;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Checkable;
-import android.widget.EditText;
 import android.widget.Spinner;
-
-/**
- * Created by MingKie on 2/22/2017.
- */
 
 public class StartActivity extends AppCompatActivity{
 
@@ -34,8 +41,6 @@ public class StartActivity extends AppCompatActivity{
         spinner.setAdapter(adapter);
 
         submit.setOnClickListener(new View.OnClickListener() {
-
-
                 @Override
                 public void onClick(View view) {
                     int input = Integer.parseInt(String.valueOf(spinner.getSelectedItem()));
