@@ -238,6 +238,7 @@ public class GameActivity extends AppCompatActivity {
                                                 i.putExtra("name", name);
                                                 i.putExtra("score", score);
                                                 startActivity(i);
+                                                finish();
                                             }
                                         })
                                 .setNegativeButton("Cancel",
