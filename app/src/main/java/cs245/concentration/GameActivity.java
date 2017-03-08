@@ -1,3 +1,17 @@
+/***************************************************************
+ * file: GameActivity.java
+ * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
+ * class: CS 245 – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 3/07/2017
+ *
+ * purpose: This program runs the activity in which the
+ *          Concentration game is played. All the logic of
+ *          the game is contained in here as well.
+ *
+ ****************************************************************/
+
 package cs245.concentration;
 
 import android.app.FragmentManager;
@@ -10,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -289,8 +304,8 @@ public class GameActivity extends AppCompatActivity {
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(GameActivity.this, StartActivity.class);
-                startActivity(i);
+                finish();
+                finishActivity(107);
             }
         });
         endGame.setOnClickListener(new View.OnClickListener() {
@@ -417,8 +432,8 @@ public class GameActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.gameActionBar:
-                finish();
-                finishActivity(107);
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

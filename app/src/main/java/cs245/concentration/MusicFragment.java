@@ -7,7 +7,7 @@
  * date last modified: 3/07/2017
  *
  * purpose: This class acts as a Fragment to control music being
- *          played throughout the app.
+ *          played during the game.
  *
  ****************************************************************/
 
@@ -58,7 +58,8 @@ public class MusicFragment extends Fragment {
     public void play() { player.start(); }
 
     // method: toggleMusic
-    // purpose: provides a toggle for the music playing in the app.
+    // purpose: provides a toggle for the music playing in the app w/boolean check to keep music paused
+    //          when app is resumed
     public void toggleMusic() {
         if(player.isPlaying()) {
             player.pause();
