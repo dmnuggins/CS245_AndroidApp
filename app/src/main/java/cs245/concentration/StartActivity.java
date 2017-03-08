@@ -1,11 +1,15 @@
 package cs245.concentration;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Checkable;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 /**
  * Created by MingKie on 2/22/2017.
@@ -15,8 +19,7 @@ public class StartActivity extends AppCompatActivity{
 
     Button submit;
     EditText userInput;
-
-
+    Button hiscores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +27,7 @@ public class StartActivity extends AppCompatActivity{
         setContentView(R.layout.activity_start);
         userInput = (EditText)findViewById(R.id.input);
         submit = (Button)findViewById(R.id.submitBtn);
-
+        hiscores = (Button) findViewById(R.id.hiscore_button);
 
         submit.setOnClickListener(new View.OnClickListener() {
 
@@ -45,12 +48,24 @@ public class StartActivity extends AppCompatActivity{
                     } else {
                         Intent i = new Intent(StartActivity.this, GameActivity.class);
                         i.putExtra("input", input);
-                        startActivity(i);
+                        startActivityForResult(i, 107);
 
                     }
                 }
         });
 
+        hiscores.setOnClickListener(new View.OnClickListener() {
 
+        @Override
+        public void onClick(View view) {
+            Intent i = new Intent(StartActivity.this, ScoreActivity.class);
+            startActivity(i);
+        }
+    });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }
