@@ -1,6 +1,6 @@
 /***************************************************************
  * file: GameActivity.java
- * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
+ * author: E. Lee, D. Nguyen, S. Lee, H. Bozawglanian, J. Canalita
  * class: CS 245 – Programming Graphical User Interfaces
  *
  * assignment: Android App
