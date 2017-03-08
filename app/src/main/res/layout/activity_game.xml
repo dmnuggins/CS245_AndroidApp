@@ -22,6 +22,14 @@
         android:theme="?attr/actionBarTheme" />
 
     <Button
+        android:id="@+id/move"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Move"
+        android:layout_below="@+id/gameActionBar"
+        android:layout_toStartOf="@+id/score" />
+
+    <Button
         android:id="@+id/musicButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,11 +66,13 @@
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/musicButton"
-        android:layout_alignParentEnd="true"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Score" />
+        android:text="Score"
+        android:layout_alignBaseline="@+id/move"
+        android:layout_alignBottom="@+id/move"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/check" />
 
     <TableLayout
         android:id="@+id/TableLayout03"
