@@ -24,9 +24,9 @@ import android.widget.Spinner;
 
 public class StartActivity extends AppCompatActivity{
 
-    Button submit;
-    Button hiscores;
-    Spinner spinner;
+    private Button submit;
+    private Button hiscores;
+    private Spinner spinner;
 
     // method: onCreate
     // purpose: this method creates the views within the start activity and sends the data

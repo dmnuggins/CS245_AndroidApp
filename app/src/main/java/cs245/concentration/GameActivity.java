@@ -32,11 +32,9 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
-
-    private int index = 0;
     private static int ROW_COUNT = -1;
     private static int COL_COUNT = -1;
-    final Context prompt = this;
+    private final Context prompt = this;
     private Context context;
     private Drawable backImage;
     private int [] [] cards;
@@ -44,9 +42,7 @@ public class GameActivity extends AppCompatActivity {
     private Card firstCard;
     private Card secondCard;
     private ButtonListener buttonListener;
-
     private TableLayout mainTable;
-
     private int score = 0;
     private int match = 0;
     private int maxMatch = 0;
@@ -56,21 +52,19 @@ public class GameActivity extends AppCompatActivity {
     private Button newGame;
     private Button check;
     private Button endGame;
-
-
     private Card answerCards[];
-
-    //MediaPlayer player;
-    int input = 0;
-
+    private int index = 0; //index for answerCards
+    private int input = 0;
     private static final String TAG_RETAINED_FRAGMENT = "RetainedFragment";
-
     private MusicFragment mRetainedFragment;
-
     private final String[] answers = new String[]{
             "DOLPHIN", "WHALE", "SHARK", "OCTOPUS", "RAY", "TURTLE", "SEAL", "STARFISH", "JELLYFISH", "CRAB"
     };
 
+    // method: onCreate
+    // purpose: This method creates the views within the game activity. Generate a game board and
+    // let the user to play the game. When it's finished, it passes name, score, and difficulty
+    // the score activity.
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,22 +74,14 @@ public class GameActivity extends AppCompatActivity {
         newGame = (Button) findViewById(R.id.newGame);
         check = (Button) findViewById(R.id.check);
         endGame = (Button) findViewById(R.id.endGame);
-
-
-
-
-
         loadImages();
         backImage =  getResources().getDrawable(R.drawable.icon);
-
         buttonListener = new ButtonListener();
         mainTable = (TableLayout)findViewById(R.id.TableLayout03);
         context  = mainTable.getContext();
 
         Intent intent = getIntent();
         input = intent.getIntExtra("input", 0);
-
-
         difficulty = input;
         maxMatch = input/2;
 
@@ -149,7 +135,9 @@ public class GameActivity extends AppCompatActivity {
                 y = 5;
                 break;
         }
+
         generateGame(x,y);
+        // check if the difficulty is one of three options, if yes, delete 2 cards.
         if (input == 10 || input == 14 || input == 18) {
             Card tempCard1 = answerCards[answerCards.length - 1];
             Card tempCard2;
@@ -162,12 +150,15 @@ public class GameActivity extends AppCompatActivity {
 
             }
         }
+
         scoreTxt.setEnabled(false);
         scoreTxt.setText("Score: " + score);
 
+        // clickListerner for Check button.
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check if both cards are flipped.
                 if (firstCard != null && secondCard != null) {
                     Log.d("myTag", "Checking cards");
                     if (cards[secondCard.x][secondCard.y] == cards[firstCard.x][firstCard.y]) {
@@ -206,6 +197,7 @@ public class GameActivity extends AppCompatActivity {
 
                     firstCard = null;
                     secondCard = null;
+                    //Check if player found all matches.
                     if (match == maxMatch) {
                         LayoutInflater li = LayoutInflater.from(prompt);
                         View promptView = li.inflate(R.layout.prompt, null);
@@ -230,7 +222,6 @@ public class GameActivity extends AppCompatActivity {
                                                 i.putExtra("name", name);
                                                 i.putExtra("score", score);
                                                 startActivity(i);
-
                                             }
                                         })
                                 .setNegativeButton("Cancel",
@@ -241,7 +232,6 @@ public class GameActivity extends AppCompatActivity {
                                         });
                         // create alert dialog
                         AlertDialog alertDialog = alertDialogBuilder.create();
-
                         // show it
                         alertDialog.show();
                     }
@@ -285,7 +275,7 @@ public class GameActivity extends AppCompatActivity {
                 mRetainedFragment.toggleMusic();
             }
         });
-
+        // clickListener for New Game button.
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -293,6 +283,7 @@ public class GameActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        // clickListener for End Game button.
         endGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -308,19 +299,6 @@ public class GameActivity extends AppCompatActivity {
 
             }
         });
-        /*
-        move.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(GameActivity.this, ScoreActivity.class);
-
-                i.putExtra("difficulty", difficulty);
-                i.putExtra("name", name);
-                i.putExtra("score", score);
-                startActivity(i);
-            }
-        });
-        */
 
     }
 
@@ -423,6 +401,8 @@ public class GameActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // method: generateGame()
+    // purpose: This method generate a game board.
     private void generateGame(int c, int r) {
         ROW_COUNT = r;
         COL_COUNT = c;
@@ -439,6 +419,8 @@ public class GameActivity extends AppCompatActivity {
         loadCards();
     }
 
+    // method: loadImages()
+    // purpose: This method loads all the images.
     private void loadImages() {
         images = new ArrayList<Drawable>();
         images.add(getResources().getDrawable(R.drawable.crab_card));
@@ -453,6 +435,8 @@ public class GameActivity extends AppCompatActivity {
         images.add(getResources().getDrawable(R.drawable.seal_card));
     }
 
+    // method: loardCards()
+    // purpose: This method loads cards based on the input.
     private void loadCards(){
         try{
             int size = ROW_COUNT*COL_COUNT;
@@ -469,7 +453,6 @@ public class GameActivity extends AppCompatActivity {
                 }
                 t=list.remove(t).intValue();
                 cards[i%COL_COUNT][i/COL_COUNT]=t%(size/2);
-
                 Log.i("loadCards()", "card["+(i%COL_COUNT)+
                         "]["+(i/COL_COUNT)+"]=" + cards[i%COL_COUNT][i/COL_COUNT]);
             }
@@ -479,6 +462,8 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    // method: createRow()
+    // purpose: This method create number of rows based on the input.
     private TableRow createRow(int y){
         TableRow row = new TableRow(context);
         row.setHorizontalGravity(Gravity.CENTER);
@@ -488,6 +473,8 @@ public class GameActivity extends AppCompatActivity {
         return row;
     }
 
+    // method: createImageButton()
+    // purpose: This method create a button with its image.
     private View createImageButton(int x, int y){
         Button button = new Button(context);
         button.setBackgroundDrawable(backImage);
@@ -500,7 +487,10 @@ public class GameActivity extends AppCompatActivity {
         return button;
     }
 
+    // This class is for each image button.
     class ButtonListener implements View.OnClickListener {
+        // method: onClick()
+        // purpose: This method is the clickListener for each image button.
         @Override
         public void onClick(View v) {
             int id = v.getId();
@@ -508,6 +498,8 @@ public class GameActivity extends AppCompatActivity {
             int y = id % 100;
             turnCard((Button) v, x, y);
         }
+        // method: turnCard()
+        // purpose: turn a card over when it's clicked.
         private void turnCard(Button button, int x, int y) {
             button.setBackgroundDrawable(images.get(cards[x][y]));
 
