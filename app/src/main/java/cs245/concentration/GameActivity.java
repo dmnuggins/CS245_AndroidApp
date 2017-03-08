@@ -1,17 +1,3 @@
-/***************************************************************
- * file: GameActivity.java
- * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
- * class: CS 245 – Programming Graphical User Interfaces
- *
- * assignment: Android App
- * date last modified: 3/07/2017
- *
- * purpose: This program runs the activity in which the
- *          Concentration game is played. All the logic of
- *          the game is contained in here as well.
- *
- ****************************************************************/
-
 package cs245.concentration;
 
 import android.app.FragmentManager;
@@ -24,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +32,8 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
+
+    private int index = 0;
     private static int ROW_COUNT = -1;
     private static int COL_COUNT = -1;
     final Context prompt = this;
@@ -55,10 +42,11 @@ public class GameActivity extends AppCompatActivity {
     private int [] [] cards;
     private List<Drawable> images;
     private Card firstCard;
-    private Card seconedCard;
+    private Card secondCard;
     private ButtonListener buttonListener;
-    private static Object lock = new Object();
+
     private TableLayout mainTable;
+
     private int score = 0;
     private int match = 0;
     private int maxMatch = 0;
@@ -68,8 +56,11 @@ public class GameActivity extends AppCompatActivity {
     private Button newGame;
     private Button check;
     private Button endGame;
-    private Button move;
 
+
+    private Card answerCards[];
+
+    //MediaPlayer player;
     int input = 0;
 
     private static final String TAG_RETAINED_FRAGMENT = "RetainedFragment";
@@ -80,11 +71,6 @@ public class GameActivity extends AppCompatActivity {
             "DOLPHIN", "WHALE", "SHARK", "OCTOPUS", "RAY", "TURTLE", "SEAL", "STARFISH", "JELLYFISH", "CRAB"
     };
 
-    // method: onCreate
-    // purpose: this method creates the game and its logic, as well as
-    //  the buttons in the activity and their click listeners. Likewise
-    //  this method creates the music fragment and a dialog for when the
-    //  user completes the game.
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +80,13 @@ public class GameActivity extends AppCompatActivity {
         newGame = (Button) findViewById(R.id.newGame);
         check = (Button) findViewById(R.id.check);
         endGame = (Button) findViewById(R.id.endGame);
-        move = (Button) findViewById(R.id.move);
-        move.setVisibility(View.INVISIBLE);
+
+
+
+
+
         loadImages();
-        backImage =  getResources().getDrawable(R.drawable.playing_card);
+        backImage =  getResources().getDrawable(R.drawable.icon);
 
         buttonListener = new ButtonListener();
         mainTable = (TableLayout)findViewById(R.id.TableLayout03);
@@ -105,8 +94,21 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         input = intent.getIntExtra("input", 0);
+
+
         difficulty = input;
         maxMatch = input/2;
+
+        if (input == 10) {
+            answerCards = new Card[12];
+        } else if (input == 14) {
+            answerCards = new Card[16];
+        } else if (input == 18) {
+            answerCards = new Card[20];
+        } else {
+            answerCards = new Card[input];
+        }
+
         int x= 0;
         int y = 0;
         switch(input) {
@@ -115,32 +117,32 @@ public class GameActivity extends AppCompatActivity {
                 y = 2;
                 break;
             case 6:
-                x = 2;
-                y = 3;
+                x = 3;
+                y = 2;
                 break;
             case 8:
-                x = 2;
-                y = 4;
+                x = 4;
+                y = 2;
                 break;
             case 10:
-                x = 2;
-                y = 5;
+                x = 4;
+                y = 3;
                 break;
             case 12:
-                x = 3;
-                y = 4;
+                x = 4;
+                y = 3;
                 break;
             case 14:
-                x = 2;
-                y = 7;
+                x = 4;
+                y = 4;
                 break;
             case 16:
                 x = 4;
                 y = 4;
                 break;
             case 18:
-                x = 3;
-                y = 6;
+                x = 4;
+                y = 5;
                 break;
             case 20:
                 x = 4;
@@ -148,70 +150,101 @@ public class GameActivity extends AppCompatActivity {
                 break;
         }
         generateGame(x,y);
+        if (input == 10 || input == 14 || input == 18) {
+            Card tempCard1 = answerCards[answerCards.length - 1];
+            Card tempCard2;
+            for (int i = 0; i < answerCards.length - 1; ++i) {
+                tempCard2 = answerCards[i];
+                if (cards[tempCard1.x][tempCard1.y] == cards[tempCard2.x][tempCard2.y]) {
+                    tempCard1.button.setVisibility(View.INVISIBLE);
+                    tempCard2.button.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        }
         scoreTxt.setEnabled(false);
         scoreTxt.setText("Score: " + score);
+
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("myTag", "Checking cards");
-                if(cards[seconedCard.x][seconedCard.y] == cards[firstCard.x][firstCard.y]){
-                    firstCard.button.setEnabled(false);
-                    seconedCard.button.setEnabled(false);
-                    score = score + 2;
-                    match = match + 1;
-                    scoreTxt.setText("Score: " + score);
-                }
-                else {
-                    seconedCard.button.setBackgroundDrawable(backImage);
-                    firstCard.button.setBackgroundDrawable(backImage);
-                    score = score - 1;
-                    if (score < 0) {
-                        score = 0;
+                if (firstCard != null && secondCard != null) {
+                    Log.d("myTag", "Checking cards");
+                    if (cards[secondCard.x][secondCard.y] == cards[firstCard.x][firstCard.y]) {
+                        firstCard.button.setEnabled(false);
+                        secondCard.button.setEnabled(false);
+                        firstCard.flipped = true;
+                        secondCard.flipped = true;
+                        Card tempCard;
+                        for (int i = 0; i < answerCards.length; ++i) {
+                            tempCard = answerCards[i];
+                            if (!tempCard.flipped)
+                                tempCard.button.setEnabled(true);
+                        }
+                        score = score + 2;
+                        match = match + 1;
+                        scoreTxt.setText("Score: " + score);
+                    } else {
+                        secondCard.button.setBackgroundDrawable(backImage);
+                        firstCard.button.setBackgroundDrawable(backImage);
+                        firstCard.flipped = false;
+                        secondCard.flipped = false;
+
+                        Card tempCard;
+                        for (int i = 0; i < answerCards.length; ++i) {
+                            tempCard = answerCards[i];
+                            if (!tempCard.flipped)
+                                tempCard.button.setEnabled(true);
+                        }
+
+                        score = score - 1;
+                        if (score < 0) {
+                            score = 0;
+                        }
+                        scoreTxt.setText("Score: " + score);
                     }
-                    scoreTxt.setText("Score: " + score);
-                }
-                firstCard=null;
-                seconedCard=null;
-                if (match == maxMatch) {
-                    LayoutInflater li = LayoutInflater.from(prompt);
-                    View promptView = li.inflate(R.layout.prompt, null);
 
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                            prompt);
-                    alertDialogBuilder.setView(promptView);
+                    firstCard = null;
+                    secondCard = null;
+                    if (match == maxMatch) {
+                        LayoutInflater li = LayoutInflater.from(prompt);
+                        View promptView = li.inflate(R.layout.prompt, null);
 
-                    final EditText userInput = (EditText) promptView.findViewById(R.id.editTextDialogUserInput);
-                    // set dialog message
-                    alertDialogBuilder
-                            .setCancelable(false)
-                            .setPositiveButton("Enter",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog,int id) {
-                                            // get user input and set it to result
-                                            // edit text
-                                            //result.setText(userInput.getText());
-                                            name = userInput.getText().toString();
-                                            Log.d("myTag", "Passed name");
-                                            Intent i = new Intent(GameActivity.this, ScoreActivity.class);
-                                            i.putExtra("difficulty", difficulty);
-                                            i.putExtra("name", name);
-                                            i.putExtra("score", score);
-                                            startActivity(i);
-                                            //move.setVisibility(View.VISIBLE);
-                                            finish();
-                                        }
-                                    })
-                            .setNegativeButton("Cancel",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog,int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    // create alert dialog
-                    AlertDialog alertDialog = alertDialogBuilder.create();
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                prompt);
+                        alertDialogBuilder.setView(promptView);
 
-                    // show it
-                    alertDialog.show();
+                        final EditText userInput = (EditText) promptView.findViewById(R.id.editTextDialogUserInput);
+                        // set dialog message
+                        alertDialogBuilder
+                                .setCancelable(false)
+                                .setPositiveButton("Enter",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                // get user input and set it to result
+                                                // edit text
+                                                name = userInput.getText().toString();
+                                                Log.d("myTag", "Passed name");
+                                                Intent i = new Intent(GameActivity.this, ScoreActivity.class);
+                                                i.putExtra("difficulty", difficulty);
+                                                i.putExtra("name", name);
+                                                i.putExtra("score", score);
+                                                startActivity(i);
+
+                                            }
+                                        })
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
+                    }
                 }
             }
         });
@@ -256,8 +289,23 @@ public class GameActivity extends AppCompatActivity {
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                finishActivity(107);
+                Intent i = new Intent(GameActivity.this, StartActivity.class);
+                startActivity(i);
+            }
+        });
+        endGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(false);
+                score = 0;
+
+                Card tempCard;
+                for(int i = 0; i < answerCards.length; ++i) {
+                    tempCard = answerCards[i];
+                    tempCard.button.setBackgroundDrawable(images.get(cards[tempCard.x][tempCard.y]));
+                    tempCard.button.setEnabled(false);
+                }
+
             }
         });
         /*
@@ -273,32 +321,79 @@ public class GameActivity extends AppCompatActivity {
             }
         });
         */
+
     }
 
-    // method: onConfigurationChanged
-    // purpose: this method runs when the activity configurations have changed.
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+//            gridView.setNumColumns(10);
+//            gridView.setPadding(60,60,60,60);
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+//            gridView.setNumColumns(4);
+//            gridView.setPadding(40,40,40,40);
+//        }
     }
 
-    // method: onStop
-    // purpose: this method runs when the application stops.
     @Override
     protected void onStop() {
         super.onStop();
     }
 
-    // method: onDestroy
-    // purpose: this method runs when the application is destroyed by a means.
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+    /*
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ArrayList<Integer> enabledList = new ArrayList<>();
+        ArrayList<Integer> resourceList = new ArrayList<>();
+        ArrayList<Integer> flippedList = new ArrayList<>();
 
-    // method: onPause
-    // purpose: this method runs when the application pauses mid-way through
-    //  its run.
+        for (int i = 0; i < gridView.getChildCount(); i++){
+            ImageView child = (ImageView) gridView.getChildAt(i).findViewById(R.id.image);
+            if (child.isEnabled()) {
+                enabledList.add(1);
+            } else {
+                enabledList.add(0);
+            }
+            resourceList.add(cardAdapter.getImageResource(cardAdapter.getCardValues().get(i)));
+            if (child.getDrawable() == getResources().getDrawable(R.drawable.playing_card)){
+                flippedList.add(1);
+            } else {
+                flippedList.add(0);
+            }
+        }
+        outState.putIntegerArrayList("enabled", enabledList);
+        outState.putIntegerArrayList("resource", resourceList);
+        outState.putIntegerArrayList("flipped", flippedList);
+    }
+    */
+    /*
+    @Override
+    protected void onRestoreInstanceState(Bundle saveInstanceState) {
+        super.onRestoreInstanceState(saveInstanceState);
+        ArrayList<Integer> enabledList = saveInstanceState.getIntegerArrayList("enabled");
+        ArrayList<Integer> resourceList = saveInstanceState.getIntegerArrayList("resource");
+        ArrayList<Integer> flippedList = saveInstanceState.getIntegerArrayList("flipped");
+
+        for (int i = 0; i < gridView.getChildCount(); i++){
+            ImageView child = (ImageView) gridView.getChildAt(i).findViewById(R.id.image);
+            if (enabledList.get(i) == 1){
+                child.setEnabled(true);
+            } else {
+                child.setEnabled(false);
+            }
+            child.setImageResource(resourceList.get(i));
+            if (flippedList.get(i) == 1){
+                child.setImageResource(R.drawable.playing_card);
+            }
+        }
+    }
+    */
     @Override
     public void onPause() {
         if(isFinishing()) {
@@ -309,8 +404,6 @@ public class GameActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    // method: onResume
-    // purpose: this method runs when the application resumes from a pause.
     @Override
     public void onResume() {
         boolean toggled = mRetainedFragment.getToggled();
@@ -320,22 +413,16 @@ public class GameActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    // method: onOptionsItemsSelected
-    // purpose: this method runs when the user selects from the action bar.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
             case R.id.gameActionBar:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+                finish();
+                finishActivity(107);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    // method: generateGame
-    // purpose: this method creates a new Table of cards, which will be loaded
-    //  after into the activity.
     private void generateGame(int c, int r) {
         ROW_COUNT = r;
         COL_COUNT = c;
@@ -352,8 +439,6 @@ public class GameActivity extends AppCompatActivity {
         loadCards();
     }
 
-    // method: loadImages
-    // purpose: this method loads all the images required in the game.
     private void loadImages() {
         images = new ArrayList<Drawable>();
         images.add(getResources().getDrawable(R.drawable.crab_card));
@@ -368,8 +453,6 @@ public class GameActivity extends AppCompatActivity {
         images.add(getResources().getDrawable(R.drawable.seal_card));
     }
 
-    // method: loadCards
-    // purpose: this method loads the cards into the activity.
     private void loadCards(){
         try{
             int size = ROW_COUNT*COL_COUNT;
@@ -396,9 +479,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    // method: createRow
-    // purpose: this method creates a new row for the TableLayout and adds the cards
-    //  to it
     private TableRow createRow(int y){
         TableRow row = new TableRow(context);
         row.setHorizontalGravity(Gravity.CENTER);
@@ -408,19 +488,18 @@ public class GameActivity extends AppCompatActivity {
         return row;
     }
 
-    // method: createImageButton
-    // purpose: this method creates a new button in the current context.
     private View createImageButton(int x, int y){
         Button button = new Button(context);
         button.setBackgroundDrawable(backImage);
         button.setId(100*x+y);
         button.setOnClickListener(buttonListener);
+
+        Card tempCard= new Card(button, x, y);
+        answerCards[index] = tempCard;
+        index++;
         return button;
     }
 
-    // method: buttonListener
-    // purpose: this method provides the click listener for the previous
-    //  image button created.
     class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -431,13 +510,22 @@ public class GameActivity extends AppCompatActivity {
         }
         private void turnCard(Button button, int x, int y) {
             button.setBackgroundDrawable(images.get(cards[x][y]));
+
             if (firstCard == null) {
                 firstCard = new Card(button, x, y);
+                firstCard.flipped = true;
             } else {
                 if (firstCard.x == x && firstCard.y == y) {
                     return; //the user pressed the same card
                 }
-                seconedCard = new Card(button, x, y);
+                secondCard = new Card(button, x, y);
+                secondCard.flipped = true;
+                Card tempCard;
+                for (int i = 0; i < answerCards.length; ++i) {
+                    tempCard = answerCards[i];
+                    if (!tempCard.flipped)
+                        tempCard.button.setEnabled(false);
+                }
             }
         }
     }
