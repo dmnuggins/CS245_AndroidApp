@@ -39,8 +39,8 @@ public class GameActivity extends AppCompatActivity {
     private Drawable backImage;
     private int [] [] cards;
     private List<Drawable> images;
-    private Card firstCard;
-    private Card secondCard;
+    private Card firstCard; // firstCard
+    private Card secondCard; // secondCard
     private ButtonListener buttonListener;
     private TableLayout mainTable;
     private int score = 0;
@@ -52,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
     private Button newGame;
     private Button check;
     private Button endGame;
-    private Card answerCards[];
+    private Card answerCards[]; // all cards that are generated
     private int index = 0; //index for answerCards
     private int input = 0;
     private static final String TAG_RETAINED_FRAGMENT = "RetainedFragment";
