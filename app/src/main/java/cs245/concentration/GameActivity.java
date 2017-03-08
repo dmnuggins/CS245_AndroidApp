@@ -2,6 +2,7 @@ package cs245.concentration;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Point;
@@ -10,14 +11,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -30,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
 
     private static int ROW_COUNT = -1;
     private static int COL_COUNT = -1;
+    final Context prompt = this;
     private Context context;
     private Drawable backImage;
     private int [] [] cards;
@@ -42,10 +47,13 @@ public class GameActivity extends AppCompatActivity {
     private int score = 0;
     private int match = 0;
     private int maxMatch = 0;
+    private String name;
+    private int difficulty;
     private TextView scoreTxt;
     private Button newGame;
     private Button check;
     private Button endGame;
+    private Button move;
 
     //MediaPlayer player;
     int input = 0;
@@ -67,6 +75,8 @@ public class GameActivity extends AppCompatActivity {
         newGame = (Button) findViewById(R.id.newGame);
         check = (Button) findViewById(R.id.check);
         endGame = (Button) findViewById(R.id.endGame);
+        move = (Button) findViewById(R.id.move);
+        move.setVisibility(View.INVISIBLE);
         loadImages();
         backImage =  getResources().getDrawable(R.drawable.playing_card);
 
@@ -76,6 +86,7 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         input = intent.getIntExtra("input", 0);
+        difficulty = input;
         maxMatch = input/2;
         int x= 0;
         int y = 0;
@@ -123,6 +134,7 @@ public class GameActivity extends AppCompatActivity {
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("myTag", "Checking cards");
                 if(cards[seconedCard.x][seconedCard.y] == cards[firstCard.x][firstCard.y]){
                     firstCard.button.setEnabled(false);
                     seconedCard.button.setEnabled(false);
@@ -139,9 +151,48 @@ public class GameActivity extends AppCompatActivity {
                     }
                     scoreTxt.setText("Score: " + score);
                 }
-
                 firstCard=null;
                 seconedCard=null;
+                if (match == maxMatch) {
+                    LayoutInflater li = LayoutInflater.from(prompt);
+                    View promptView = li.inflate(R.layout.prompt, null);
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            prompt);
+                    alertDialogBuilder.setView(promptView);
+
+                    final EditText userInput = (EditText) promptView.findViewById(R.id.editTextDialogUserInput);
+                    // set dialog message
+                    alertDialogBuilder
+                            .setCancelable(false)
+                            .setPositiveButton("Enter",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            // get user input and set it to result
+                                            // edit text
+                                            //result.setText(userInput.getText());
+                                            name = userInput.getText().toString();
+                                            Log.d("myTag", "Passed name");
+                                            Intent i = new Intent(GameActivity.this, ScoreActivity.class);
+                                            i.putExtra("difficulty", difficulty);
+                                            i.putExtra("name", name);
+                                            i.putExtra("score", score);
+                                            startActivity(i);
+                                            //move.setVisibility(View.VISIBLE);
+                                        }
+                                    })
+                            .setNegativeButton("Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    // show it
+                    alertDialog.show();
+                }
             }
         });
 
@@ -189,6 +240,19 @@ public class GameActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        /*
+        move.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(GameActivity.this, ScoreActivity.class);
+
+                i.putExtra("difficulty", difficulty);
+                i.putExtra("name", name);
+                i.putExtra("score", score);
+                startActivity(i);
+            }
+        });
+        */
     }
 
     @Override
@@ -366,10 +430,10 @@ public class GameActivity extends AppCompatActivity {
     class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-                int id = v.getId();
-                int x = id / 100;
-                int y = id % 100;
-                turnCard((Button) v, x, y);
+            int id = v.getId();
+            int x = id / 100;
+            int y = id % 100;
+            turnCard((Button) v, x, y);
         }
         private void turnCard(Button button, int x, int y) {
             button.setBackgroundDrawable(images.get(cards[x][y]));
