@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -38,19 +37,17 @@ public class GameActivity extends AppCompatActivity {
     private Card firstCard;
     private Card seconedCard;
     private ButtonListener buttonListener;
-
     private static Object lock = new Object();
     private TableLayout mainTable;
     private int score = 0;
     private int match = 0;
     private int maxMatch = 0;
-
     private TextView scoreTxt;
     private Button newGame;
     private Button check;
     private Button endGame;
 
-    MediaPlayer player;
+    //MediaPlayer player;
     int input = 0;
 
     private static final String TAG_RETAINED_FRAGMENT = "RetainedFragment";
@@ -192,8 +189,6 @@ public class GameActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
     }
 
     @Override
@@ -268,7 +263,6 @@ public class GameActivity extends AppCompatActivity {
     */
     @Override
     public void onPause() {
-
         if(isFinishing()) {
             FragmentManager fm = getFragmentManager();
             fm.beginTransaction().remove(mRetainedFragment).commit();
@@ -284,7 +278,6 @@ public class GameActivity extends AppCompatActivity {
             mRetainedFragment.play();
         }
         super.onResume();
-
     }
 
     @Override
@@ -300,9 +293,7 @@ public class GameActivity extends AppCompatActivity {
     private void generateGame(int c, int r) {
         ROW_COUNT = r;
         COL_COUNT = c;
-
         cards = new int [COL_COUNT] [ROW_COUNT];
-
         TableRow tr = ((TableRow)findViewById(R.id.TableRow01));
         tr.removeAllViews();
         mainTable = new TableLayout(context);
@@ -311,17 +302,12 @@ public class GameActivity extends AppCompatActivity {
         for (int y = 0; y < ROW_COUNT; y++) {
             mainTable.addView(createRow(y));
         }
-
         firstCard=null;
         loadCards();
-
-
-
     }
 
     private void loadImages() {
         images = new ArrayList<Drawable>();
-
         images.add(getResources().getDrawable(R.drawable.crab_card));
         images.add(getResources().getDrawable(R.drawable.dolphin_card));
         images.add(getResources().getDrawable(R.drawable.jellyfish_card));
@@ -337,22 +323,17 @@ public class GameActivity extends AppCompatActivity {
     private void loadCards(){
         try{
             int size = ROW_COUNT*COL_COUNT;
-
             Log.i("loadCards()","size=" + size);
-
             ArrayList<Integer> list = new ArrayList<Integer>();
-
             for(int i=0;i<size;i++){
                 list.add(new Integer(i));
             }
             Random r = new Random();
             for(int i=size-1;i>=0;i--){
                 int t=0;
-
                 if(i>0){
                     t = r.nextInt(i);
                 }
-
                 t=list.remove(t).intValue();
                 cards[i%COL_COUNT][i/COL_COUNT]=t%(size/2);
 
@@ -363,7 +344,6 @@ public class GameActivity extends AppCompatActivity {
         catch (Exception e) {
             Log.e("loadCards()", e+"");
         }
-
     }
 
     private TableRow createRow(int y){
@@ -384,64 +364,24 @@ public class GameActivity extends AppCompatActivity {
     }
 
     class ButtonListener implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
-
-            synchronized (lock) {
-                if (firstCard != null && seconedCard != null) {
-                    return;
-                }
                 int id = v.getId();
                 int x = id / 100;
                 int y = id % 100;
                 turnCard((Button) v, x, y);
-            }
-
         }
-
         private void turnCard(Button button, int x, int y) {
             button.setBackgroundDrawable(images.get(cards[x][y]));
-
             if (firstCard == null) {
                 firstCard = new Card(button, x, y);
             } else {
-
                 if (firstCard.x == x && firstCard.y == y) {
                     return; //the user pressed the same card
                 }
-
                 seconedCard = new Card(button, x, y);
-
             }
-
         }
     }
-    /*
-    class UpdateCardsHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            synchronized (lock) {
-                checkCards();
-            }
-        }
-        public void checkCards(){
-            if(cards[seconedCard.x][seconedCard.y] == cards[firstCard.x][firstCard.y]){
-                //firstCard.button.setVisibility(View.INVISIBLE);
-                //seconedCard.button.setVisibility(View.INVISIBLE);
-                firstCard.button.setEnabled(false);
-                seconedCard.button.setEnabled(false);
-            }
-            else {
-                seconedCard.button.setBackgroundDrawable(backImage);
-                firstCard.button.setBackgroundDrawable(backImage);
-            }
-
-            firstCard=null;
-            seconedCard=null;
-        }
-    }
-    */
 
 }
