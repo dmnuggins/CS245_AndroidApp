@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_game"
     android:layout_width="fill_parent"
@@ -8,18 +9,6 @@
     android:orientation="vertical"
 
     tools:context="cs245.concentration.GameActivity">
-
-    <cs245.concentration.Game.StaticGridView
-        android:id="@+id/cardsGridView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/buttonPanel"
-        android:gravity="center"
-        android:horizontalSpacing="2dp"
-        android:numColumns="4"
-        android:padding="@dimen/grid_view_padding"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="2dp" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/gameActionBar"
@@ -32,54 +21,6 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
-    <RelativeLayout
-        android:id="@+id/buttonPanel"
-        style="@android:style/ButtonBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/buttonBarColor"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/newGameButton"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:onClick="newGame"
-            android:text="@string/new_game"
-            android:textColor="@color/buttonTextColor" />
-
-        <Button
-            android:id="@+id/tryAgainButton"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:background="@color/tryAgainButtonColor"
-            android:onClick="tryAgain"
-            android:text="@string/try_again"
-            android:textColor="@color/buttonTextColor" />
-
-        <Button
-            android:id="@+id/endGameButton"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:onClick="endGame"
-            android:text="@string/end_game"
-            android:textColor="@color/buttonTextColor" />
-    </RelativeLayout>
-
     <Button
         android:id="@+id/musicButton"
         android:layout_width="wrap_content"
@@ -88,5 +29,77 @@
         android:layout_below="@+id/gameActionBar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/newGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="New Game" />
+
+    <Button
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/newGame"
+        android:layout_centerHorizontal="true"
+        android:text="Check" />
+
+    <Button
+        android:id="@+id/endGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/check"
+        android:text="End Game" />
+
+    <EditText
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/musicButton"
+        android:layout_alignParentEnd="true"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Score" />
+
+    <TableLayout
+        android:id="@+id/TableLayout03"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/newGame"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/musicButton">
+
+        <TableRow
+            android:id="@+id/TableRow01"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/playing_card" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"></LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableLayout>
 
 </RelativeLayout>
