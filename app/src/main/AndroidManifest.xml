@@ -16,8 +16,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".GameActivity"
+        <activity android:name=".GameActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".StartActivity">

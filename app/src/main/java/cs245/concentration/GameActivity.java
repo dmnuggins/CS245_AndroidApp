@@ -13,11 +13,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Display;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
@@ -119,7 +121,6 @@ public class GameActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -209,7 +210,6 @@ public class GameActivity extends AppCompatActivity {
             fm.beginTransaction().remove(mRetainedFragment).commit();
         }
         mRetainedFragment.pause();
-
         super.onPause();
     }
 
