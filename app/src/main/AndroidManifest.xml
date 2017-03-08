@@ -26,6 +26,10 @@
                 android:value=".StartActivity"/>
         </activity>
 
+        <activity android:name=".ScoreActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:parentActivityName=".StartActivity"/>
+
 
     </application>
 
