@@ -18,39 +18,30 @@ import android.widget.Spinner;
 public class StartActivity extends AppCompatActivity{
 
     Button submit;
-    EditText userInput;
     Button hiscores;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        userInput = (EditText)findViewById(R.id.input);
         submit = (Button)findViewById(R.id.submitBtn);
         hiscores = (Button) findViewById(R.id.hiscore_button);
+
+        spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.difficulty_array, R.layout.spinner_layout);
+        adapter.setDropDownViewResource(R.layout.spinner_layout);
+        spinner.setAdapter(adapter);
 
         submit.setOnClickListener(new View.OnClickListener() {
 
 
                 @Override
                 public void onClick(View view) {
-                    String tempInput = userInput.getText().toString();
-                    int input = Integer.parseInt(tempInput);
-                    if (input > 20) {
-                        userInput.requestFocus();
-                        userInput.setError("CANNOT BE GREATER THAN 20");
-                    } else if (input < 4) {
-                        userInput.requestFocus();
-                        userInput.setError("CANNOT BE LESS THAN 4");
-                    } else if (input % 2 != 0) {
-                        userInput.requestFocus();
-                        userInput.setError("CANNOT BE AN ODD NUMBER");
-                    } else {
+                    int input = Integer.parseInt(String.valueOf(spinner.getSelectedItem()));
                         Intent i = new Intent(StartActivity.this, GameActivity.class);
                         i.putExtra("input", input);
                         startActivityForResult(i, 107);
-
-                    }
                 }
         });
 

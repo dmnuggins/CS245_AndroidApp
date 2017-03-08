@@ -258,13 +258,6 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-//            gridView.setNumColumns(10);
-//            gridView.setPadding(60,60,60,60);
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//            gridView.setNumColumns(4);
-//            gridView.setPadding(40,40,40,40);
-//        }
     }
 
     @Override
@@ -276,55 +269,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-    /*
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        ArrayList<Integer> enabledList = new ArrayList<>();
-        ArrayList<Integer> resourceList = new ArrayList<>();
-        ArrayList<Integer> flippedList = new ArrayList<>();
 
-        for (int i = 0; i < gridView.getChildCount(); i++){
-            ImageView child = (ImageView) gridView.getChildAt(i).findViewById(R.id.image);
-            if (child.isEnabled()) {
-                enabledList.add(1);
-            } else {
-                enabledList.add(0);
-            }
-            resourceList.add(cardAdapter.getImageResource(cardAdapter.getCardValues().get(i)));
-            if (child.getDrawable() == getResources().getDrawable(R.drawable.playing_card)){
-                flippedList.add(1);
-            } else {
-                flippedList.add(0);
-            }
-        }
-        outState.putIntegerArrayList("enabled", enabledList);
-        outState.putIntegerArrayList("resource", resourceList);
-        outState.putIntegerArrayList("flipped", flippedList);
-    }
-    */
-    /*
-    @Override
-    protected void onRestoreInstanceState(Bundle saveInstanceState) {
-        super.onRestoreInstanceState(saveInstanceState);
-        ArrayList<Integer> enabledList = saveInstanceState.getIntegerArrayList("enabled");
-        ArrayList<Integer> resourceList = saveInstanceState.getIntegerArrayList("resource");
-        ArrayList<Integer> flippedList = saveInstanceState.getIntegerArrayList("flipped");
-
-        for (int i = 0; i < gridView.getChildCount(); i++){
-            ImageView child = (ImageView) gridView.getChildAt(i).findViewById(R.id.image);
-            if (enabledList.get(i) == 1){
-                child.setEnabled(true);
-            } else {
-                child.setEnabled(false);
-            }
-            child.setImageResource(resourceList.get(i));
-            if (flippedList.get(i) == 1){
-                child.setImageResource(R.drawable.playing_card);
-            }
-        }
-    }
-    */
     @Override
     public void onPause() {
         if(isFinishing()) {
