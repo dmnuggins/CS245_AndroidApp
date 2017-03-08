@@ -1,17 +1,3 @@
-/***************************************************************
- * file: MusicFragment.java
- * author: E. Lee, D. Nyugen, S. Lee, H. Bozawglanian, J. Canalita
- * class: CS 245 – Programming Graphical User Interfaces
- *
- * assignment: Android App
- * date last modified: 3/07/2017
- *
- * purpose: This program runs the activity in which the
- *          Concentration game is played. All the logic of
- *          the game is contained in here as well.
- *
- ****************************************************************/
-
 package cs245.concentration;
 
 import android.app.FragmentManager;
@@ -24,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -75,6 +60,7 @@ public class GameActivity extends AppCompatActivity {
 
     private Card answerCards[];
 
+    //MediaPlayer player;
     int input = 0;
 
     private static final String TAG_RETAINED_FRAGMENT = "RetainedFragment";
@@ -275,6 +261,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
+
         ab.setDisplayHomeAsUpEnabled(true);
 
         // find the retained fragment on activity restarts
@@ -299,12 +286,11 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        //
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                finishActivity(107);
+                Intent i = new Intent(GameActivity.this, StartActivity.class);
+                startActivity(i);
             }
         });
         endGame.setOnClickListener(new View.OnClickListener() {
@@ -350,6 +336,15 @@ public class GameActivity extends AppCompatActivity {
 //        }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
     /*
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -399,9 +394,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
     */
-
-    // method: onPause
-    // purpose: stops the music when GameActivity loses focus
     @Override
     public void onPause() {
         if(isFinishing()) {
@@ -412,9 +404,6 @@ public class GameActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    // method: onResume
-    // purpose: check to see if the music has been toggled off and resumes music play if toggle is
-    // false and if toggled, music will stay off
     @Override
     public void onResume() {
         boolean toggled = mRetainedFragment.getToggled();
@@ -424,14 +413,12 @@ public class GameActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    // method: onOptionsItemSelected
-    // purpose: return to parent activity when up arrow on action bar is used
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.gameActionBar:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+                finish();
+                finishActivity(107);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -63,15 +63,12 @@
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/TableLayout03"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/check"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Score"
-        android:backgroundTint="@android:color/white"
-        android:textColor="@color/buttonTextColor"
-        android:textStyle="bold" />
+        android:layout_above="@+id/TableLayout03"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/check" />
 
     <TableLayout
         android:id="@+id/TableLayout03"
