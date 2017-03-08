@@ -15,7 +15,7 @@ package cs245.concentration.Game;
 
 import cs245.concentration.R;
 
-public enum ScoreObject {
+enum ScoreObject {
 
     FOUR(R.string.four, R.layout.score_4),
     SIX(R.string.six, R.layout.score_6),
@@ -30,15 +30,21 @@ public enum ScoreObject {
     private int mTitleResId;
     private int mLayoutResId;
 
+    // method: ScoreObject
+    // purpose: this method acts as the class constructor.
     ScoreObject(int titleResId, int layoutResId) {
         mTitleResId = titleResId;
         mLayoutResId = layoutResId;
     }
 
+    // method: getTitleResId
+    // purpose: this method returns the resource id of the current view.
     public int getTitleResId() {
         return mTitleResId;
     }
 
+    // method: getLayoutResId
+    // purpose: this method returns the layout id of the current view.
     public int getLayoutResId() {
         return mLayoutResId;
     }

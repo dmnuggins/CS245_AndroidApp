@@ -28,6 +28,9 @@ public class StartActivity extends AppCompatActivity{
     Button hiscores;
     Spinner spinner;
 
+    // method: onCreate
+    // purpose: this method creates the views within the start activity and sends the data
+    //  to the next activity on button click.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,8 @@ public class StartActivity extends AppCompatActivity{
     });
     }
 
+    // method: onPause
+    // purpose: this method runs when app is paused.
     @Override
     public void onPause() {
         super.onPause();

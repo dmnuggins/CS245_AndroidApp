@@ -20,8 +20,12 @@ public class Score {
     private String username;
     private String score;
 
-    public Score(){}
+    // method: Score
+    // purpose: this method acts as the class constructor.
+    Score(){}
 
+    // method: Score
+    // purpose: this method also acts as a constructor, but with parameters.
     public Score(String difficulty, String username, String score){
         super();
         this.difficulty = difficulty;
@@ -29,41 +33,59 @@ public class Score {
         this.score = score;
     }
 
+    // method: toString
+    // purpose: this method returns the given Score as a readable String.
     @Override
     public String toString() {
         return "Score [id=" + id + ", difficulty=" + difficulty + ", username=" + username + ", score=" + score
                 + "]";
     }
 
+    // method: getId
+    // purpose: id getter
     public int getId() {
         return id;
     }
 
+    // method: setId
+    // purpose: id setter
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getDifficulty() {
+    // method: getDifficulty
+    // purpose: difficulty getter
+    String getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    // method: setDifficulty
+    // purpose: difficulty setter
+    void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
-    public String getUsername() {
+    // method: getUsername
+    // purpose: username getter
+    String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    // method: setUsername
+    // purpose: username setter
+    void setUsername(String username) {
         this.username = username;
     }
 
-    public String getScore() {
+    // method: getScore
+    // purpose: score getter
+    String getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    // method: setScore
+    // purpose: score setter
+    void setScore(String score) {
         this.score = score;
     }
 }

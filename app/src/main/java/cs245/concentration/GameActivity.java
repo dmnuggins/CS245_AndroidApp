@@ -69,7 +69,6 @@ public class GameActivity extends AppCompatActivity {
     private Button endGame;
     private Button move;
 
-    //MediaPlayer player;
     int input = 0;
 
     private static final String TAG_RETAINED_FRAGMENT = "RetainedFragment";
@@ -80,6 +79,11 @@ public class GameActivity extends AppCompatActivity {
             "DOLPHIN", "WHALE", "SHARK", "OCTOPUS", "RAY", "TURTLE", "SEAL", "STARFISH", "JELLYFISH", "CRAB"
     };
 
+    // method: onCreate
+    // purpose: this method creates the game and its logic, as well as
+    //  the buttons in the activity and their click listeners. Likewise
+    //  this method creates the music fragment and a dialog for when the
+    //  user completes the game.
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,21 +273,30 @@ public class GameActivity extends AppCompatActivity {
         */
     }
 
+    // method: onConfigurationChanged
+    // purpose: this method runs when the activity configurations have changed.
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
 
+    // method: onStop
+    // purpose: this method runs when the application stops.
     @Override
     protected void onStop() {
         super.onStop();
     }
 
+    // method: onDestroy
+    // purpose: this method runs when the application is destroyed by a means.
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
 
+    // method: onPause
+    // purpose: this method runs when the application pauses mid-way through
+    //  its run.
     @Override
     public void onPause() {
         if(isFinishing()) {
@@ -294,6 +307,8 @@ public class GameActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    // method: onResume
+    // purpose: this method runs when the application resumes from a pause.
     @Override
     public void onResume() {
         boolean toggled = mRetainedFragment.getToggled();
@@ -303,6 +318,8 @@ public class GameActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    // method: onOptionsItemsSelected
+    // purpose: this method runs when the user selects from the action bar.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -313,6 +330,9 @@ public class GameActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // method: generateGame
+    // purpose: this method creates a new Table of cards, which will be loaded
+    //  after into the activity.
     private void generateGame(int c, int r) {
         ROW_COUNT = r;
         COL_COUNT = c;
@@ -329,6 +349,8 @@ public class GameActivity extends AppCompatActivity {
         loadCards();
     }
 
+    // method: loadImages
+    // purpose: this method loads all the images required in the game.
     private void loadImages() {
         images = new ArrayList<Drawable>();
         images.add(getResources().getDrawable(R.drawable.crab_card));
@@ -343,6 +365,8 @@ public class GameActivity extends AppCompatActivity {
         images.add(getResources().getDrawable(R.drawable.seal_card));
     }
 
+    // method: loadCards
+    // purpose: this method loads the cards into the activity.
     private void loadCards(){
         try{
             int size = ROW_COUNT*COL_COUNT;
@@ -369,6 +393,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    // method: createRow
+    // purpose: this method creates a new row for the TableLayout and adds the cards
+    //  to it
     private TableRow createRow(int y){
         TableRow row = new TableRow(context);
         row.setHorizontalGravity(Gravity.CENTER);
@@ -378,6 +405,8 @@ public class GameActivity extends AppCompatActivity {
         return row;
     }
 
+    // method: createImageButton
+    // purpose: this method creates a new button in the current context.
     private View createImageButton(int x, int y){
         Button button = new Button(context);
         button.setBackgroundDrawable(backImage);
@@ -386,6 +415,9 @@ public class GameActivity extends AppCompatActivity {
         return button;
     }
 
+    // method: buttonListener
+    // purpose: this method provides the click listener for the previous
+    //  image button created.
     class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
