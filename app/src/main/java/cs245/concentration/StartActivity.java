@@ -62,11 +62,4 @@ public class StartActivity extends AppCompatActivity{
         }
     });
     }
-
-    // method: onPause
-    // purpose: this method runs when app is paused.
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 }
