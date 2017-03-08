@@ -16,9 +16,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".GameActivity"
+        <activity
+            android:name=".GameActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".StartActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StartActivity"/>
+        </activity>
+
+
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import android.os.Bundle;
 public class MusicFragment extends Fragment {
 
     MediaPlayer player;
+    boolean toggled = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,29 +25,33 @@ public class MusicFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    public void setData(MediaPlayer player) {
+    public void setPlayer(MediaPlayer player) {
         this.player = player;
     }
 
-    public MediaPlayer getData() {
+    public MediaPlayer getPlayer() {
         return player;
     }
 
+    // Pauses MediaPlayer
+    public void pause() { player.pause(); }
 
+    // Starts/restarts MediaPLayer
+    public void play() { player.start(); }
 
-    public void pause() {
-        player.pause();
-    }
-    public void play() {
-        player.start();
-    }
-
+    // Toggles music to pause and changes boolean toggled
     public void toggleMusic() {
         if(player.isPlaying()) {
             player.pause();
+            toggled = true;
         } else {
             player.start();
+            toggled = false;
         }
+    }
+    // returns toggled
+    public boolean getToggled() {
+        return toggled;
     }
 
 }

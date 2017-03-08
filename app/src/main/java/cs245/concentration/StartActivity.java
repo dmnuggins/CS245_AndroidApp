@@ -44,7 +44,7 @@ public class StartActivity extends AppCompatActivity{
                     } else {
                         Intent i = new Intent(StartActivity.this, GameActivity.class);
                         i.putExtra("input", input);
-                        startActivity(i);
+                        startActivityForResult(i, 107);
 
                     }
                 }

@@ -8,13 +8,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.app.FragmentManager;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +62,15 @@ public class GameActivity extends AppCompatActivity {
         gridView.setColumnWidth(width);
         gridView.setAdapter(cardAdapter);
 
+        // up navigation
+        Toolbar myChildToolbar =  (Toolbar) findViewById(R.id.gameActionBar);
+        setSupportActionBar(myChildToolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        ab.setDisplayHomeAsUpEnabled(true);
+
         // find the retained fragment on activity restarts
         FragmentManager manager = getFragmentManager();
         mRetainedFragment = (MusicFragment) manager.findFragmentByTag(TAG_RETAINED_FRAGMENT);
@@ -68,7 +81,7 @@ public class GameActivity extends AppCompatActivity {
             mRetainedFragment = new MusicFragment();
             manager.beginTransaction().add(mRetainedFragment, TAG_RETAINED_FRAGMENT).commit();
             // load data from a data source or perform any calculation
-            mRetainedFragment.setData(mRetainedFragment.getData());
+            mRetainedFragment.setPlayer(mRetainedFragment.getPlayer());
         }
 
 
@@ -155,8 +168,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void newGame(View view) {
-        Intent intent = new Intent(this, StartActivity.class);
-        startActivity(intent);
+        finish();
+        finishActivity(107);
+
     }
 
     public void tryAgain(View view) {
@@ -201,9 +215,22 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        mRetainedFragment.play();
+        boolean toggled = mRetainedFragment.getToggled();
+        if(!toggled) {
+            mRetainedFragment.play();
+        }
         super.onResume();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.gameActionBar:
+                finish();
+                finishActivity(107);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
