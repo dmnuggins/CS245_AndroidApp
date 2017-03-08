@@ -21,6 +21,17 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp" />
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/gameActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <RelativeLayout
         android:id="@+id/buttonPanel"
         style="@android:style/ButtonBar"
@@ -74,7 +85,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Music on/off"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/gameActionBar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
 </RelativeLayout>
